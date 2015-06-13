@@ -2,18 +2,105 @@
 <html lang="">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <title>Twisted</title>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="styles/main.css">
+    <title>Twisted</title>
+
+    <link rel="stylesheet" href="styles/main.css">
+
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="elements/elements.html">
 </head>
 
-<body>
-  <script src="scripts/d3.js"></script>
-  <script src="scripts/app.js"></script>
+<body unresolved class="fullbleed layout vertical">
+    
+    <template is="dom-bind" id="app">
+
+        <paper-drawer-panel id="paperDrawerPanel" forceNarrow>
+            
+            <div drawer>
+                <!-- Drawer Toolbar -->
+                <paper-toolbar id="drawerToolbar">
+                    <span>Menu</span>
+                </paper-toolbar>
+                <!-- Drawer Content -->
+                <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
+                    <a data-route="home" href="/">
+                        <iron-icon icon="home"></iron-icon>
+                        <span>Home</span>
+                    </a>
+                    <a data-route="users" href="/users">
+                        <iron-icon icon="info"></iron-icon>
+                        <span>Users</span>
+                    </a>
+                    <a data-route="contact" href="/contact">
+                        <iron-icon icon="mail"></iron-icon>
+                        <span>Contact</span>
+                    </a>
+                </paper-menu>
+            </div>
+            
+            <paper-header-panel main mode="waterfall-tall">
+                
+                <!-- Main Toolbar -->
+                <paper-toolbar id="mainToolbar">
+                    <button tabindex="1" id="paperToggle" paper-drawer-toggle>
+                        <iron-icon icon="menu" paper-drawer-toggle></iron-icon>
+                    </button>
+                    <span class="flex"></span>
+                    <!-- Toolbar icons -->
+                    <paper-icon-button icon="refresh"></paper-icon-button>
+                    <paper-icon-button icon="search"></paper-icon-button>
+                    <div class="middle"></div>
+                    <!-- Application name -->
+                    <div class="appname bottom paper-font-display2">Twisted</div>
+                </paper-toolbar>
+
+                <!-- Main Content -->
+                <iron-pages attr-for-selected="data-route" selected="{{route}}">
+
+                    <section data-route="home" class="fit">
+                        <paper-material elevation="1" class="fit" id="d3">
+                            
+                        </paper-material>
+                    </section>
+
+                    <section data-route="users">
+                        <paper-material elevation="1">
+                            <h2 class="paper-font-display2">Users</h2>
+                            <p>This is the users section</p>
+                            <a href="/users/Rob">Rob</a>
+                        </paper-material>
+                    </section>
+
+                    <section data-route="user-info">
+                        <paper-material elevation="1">
+                            <h2 class="paper-font-display2">
+                                User:<span>{{params.name}}</span>
+                            </h2>
+                            <div>This is <span>{{params.name}}</span>'s section</div>
+                        </paper-material>
+                    </section>
+
+                    <section data-route="contact">
+                        <paper-material elevation="1">
+                            <h2 class="paper-font-display2">Contact</h2>
+                            <p>This is the contact section</p>
+                        </paper-material>
+                    </section>
+
+                </iron-pages>
+                
+            </paper-header-panel>
+            
+        </paper-drawer-panel>
+
+    </template>
+
+    <script src="scripts/d3.js"></script>
+    <script src="scripts/app.js"></script>
 </body>
 
 </html>

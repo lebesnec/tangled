@@ -1,48 +1,10 @@
-(function(document) {
-    'use strict';
-
-    // Grab a reference to our auto-binding template
-    // and give it some initial binding values
-    // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
-    var app = document.querySelector('#app');
-
-    // Listen for template bound event to know when bindings
-    // have resolved and content has been stamped to the page
-    app.addEventListener('dom-change', function() {
-        startD3();
-    });
-
-    // See https://github.com/Polymer/polymer/issues/1381
-    window.addEventListener('WebComponentsReady', function() {
-        document.querySelector('body').removeAttribute('unresolved');
-
-        // Ensure the drawer is hidden on desktop/tablet
-        var drawerPanel = document.querySelector('#paperDrawerPanel');
-        drawerPanel.forceNarrow = true;
-    });
-
-    // Close drawer after menu item is selected if drawerPanel is narrow
-    app.onMenuSelect = function() {
-        var drawerPanel = document.querySelector('#paperDrawerPanel');
-        if (drawerPanel.narrow) {
-            drawerPanel.closeDrawer();
-        }
-    };
-
-})(document);
-
-// TODO: Decide if we still want to suggest wrapping as it requires
-// using webcomponents.min.js.
-// wrap document so it plays nice with other libraries
-// http://www.polymer-project.org/platform/shadow-dom.html#wrappers
-// )(wrap(document));
-
+startD3();
 
 function startD3() {
 
-    var width = 960,
-        height = 500;
-
+    var width = window.innerWidth,
+        height = window.innerHeight;
+console.log(width);
     var color = d3.scale.category20();
 
     var force = d3.layout.force()

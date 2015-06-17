@@ -4,7 +4,7 @@ function startD3() {
 
     var width = window.innerWidth,
         height = window.innerHeight;
-console.log(width);
+    
     var color = d3.scale.category20();
 
     var force = d3.layout.force()

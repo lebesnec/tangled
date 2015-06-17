@@ -3,14 +3,16 @@ body {
     font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #333;
     margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 .node {
-  stroke: #fff;
-  stroke-width: 1.5px;
+    stroke: #fff;
+    stroke-width: 1.5px;
 }
 
 .link {
-  stroke: #999;
-  stroke-opacity: .6;
+    stroke: #999;
+    stroke-opacity: .6;
 }

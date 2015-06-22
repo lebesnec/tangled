@@ -7,12 +7,6 @@ body {
     overflow: hidden;
 }
 
-.node {
-    stroke: #fff;
-    stroke-width: 1.5px;
-}
-
-.link {
-    stroke: #999;
-    stroke-opacity: .6;
+circle {
+  fill: steelblue;
 }

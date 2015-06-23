@@ -8,5 +8,10 @@ body {
 }
 
 .node {
-  fill: steelblue;
+  fill: blue;
+}
+
+.link {
+    stroke: red;
+    stroke-width: 2;
 }

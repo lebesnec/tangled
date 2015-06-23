@@ -7,17 +7,17 @@ function startD3() {
             .attr("width", width)
             .attr("height", height);
     
-    var data = d3.range(20)
-        .map(function(value) { 
-            return {
-                id : value,
-                x : Math.random() * width, 
-                y : Math.random() * height
-            }; 
-        });
+    // NODES :
+    var dataNodes = d3.range(20).map(function(value) { 
+        return {
+            id : "node_" + value,
+            x : Math.random() * width, 
+            y : Math.random() * height
+        }; 
+    });
     
-    var nodes = svg.selectAll("node").data(data, function(d) {
-        return d.id;
+    var nodes = svg.selectAll("node").data(dataNodes, function(n) {
+        return n.id;
     });
     
     nodes.exit()
@@ -33,14 +33,23 @@ function startD3() {
             .attr("r", 10);
 
     nodes
-        .attr("cx", function(d) {
-            return d.x; 
+        .attr("cx", function(n) {
+            return n.x; 
         })
-        .attr("cy", function(d) { 
-            return d.y; 
+        .attr("cy", function(n) { 
+            return n.y; 
         });
     
-    var links = svg.selectAll("link").data(data);
+    // LINKS :
+    var dataLinks = d3.range(20).map(function(value) { 
+        return {
+            id : "links_" + value,
+            target : "node_" + value, //TODO
+            source : "node_" + (value == 19 ? 0 : value + 1)
+        }; 
+    });
+    
+    var links = svg.selectAll("link").data(dataLinks);
     
     links.exit()
         .remove();
@@ -51,13 +60,19 @@ function startD3() {
 
     links
         .attr("x1", function(l) { 
-            var sourceNode = data.nodes.filter(function(d,i){ return i==l.source })[0];
-            d3.select(this).attr("y1",sourceNode.y);
+            var sourceNode = dataNodes.filter(function(n) {
+                return n.id == l.source;
+            })[0];
+
+            d3.select(this).attr("y1", sourceNode.y);
             return sourceNode.x
         })
         .attr("x2", function(l) { 
-            var targetNode = data.nodes.filter(function(d,i){ return i==l.target })[0];
-             d3.select(this).attr("y2",targetNode.y);
+            var targetNode = dataNodes.filter(function(n) {
+                return n.id == l.target;
+            })[0];
+        
+            d3.select(this).attr("y2", targetNode.y);
             return targetNode.x
         });
 }

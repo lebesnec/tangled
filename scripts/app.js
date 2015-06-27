@@ -1,3 +1,12 @@
+/**
+ * http://stackoverflow.com/questions/1527803/generating-random-numbers-in-javascript-in-a-specific-range
+ * Returns a random integer between min (inclusive) and max (inclusive)
+ * Using Math.round() will give you a non-uniform distribution!
+ */
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 function startD3() {
     var width = window.innerWidth,
         height = window.innerHeight;
@@ -7,16 +16,70 @@ function startD3() {
             .attr("width", width)
             .attr("height", height);
     
-    // NODES :
-    var dataNodes = d3.range(20).map(function(value) { 
+    // DATA :
+    var dataNodes = d3.range(20).map(function (value) {
         return {
             id : "node_" + value,
-            x : Math.random() * width, 
+            x : Math.random() * width,
             y : Math.random() * height
-        }; 
+        };
     });
     
-    var nodes = svg.selectAll("node").data(dataNodes, function(n) {
+    var dataLinks = d3.range(20).map(function (value) {
+        return {
+            id : "links_" + value,
+            target : dataNodes[getRandomInt(0, dataNodes.length - 1)],
+            source : dataNodes[getRandomInt(0, dataNodes.length - 1)]
+        };
+    });
+    
+    // LINKS :    
+    var links = svg.selectAll("link").data(dataLinks);
+    
+    links.exit()
+        .remove();
+
+    links.enter()
+        .append("line")
+            .attr("class", "link");
+
+    links
+        .attr("x1", function (l) {
+            return l.source.x;
+        })
+        .attr("y1", function (l) {
+            d3.select(this).attr("y1", l.source.y);
+            return l.source.y;
+        })
+        .attr("x2", function (l) {
+            return l.target.x;
+        })
+        .attr("y2", function (l) {
+            return l.target.y;
+        });
+    
+    // NODES :
+    var drag = d3.behavior.drag()
+        .on("drag", function (n) {
+            n.x += d3.event.dx;
+            n.y += d3.event.dy;
+            d3.select(this)
+                .attr("cx", n.x)
+                .attr("cy", n.y);
+            links.each(function (l) {
+                if (l.source === n) {
+                   d3.select(this)
+                       .attr("x1", n.x)
+                       .attr("y1", n.y);
+                } else if (l.target === n) {
+                   d3.select(this)
+                       .attr("x2", n.x)
+                       .attr("y2", n.y);
+                }
+            });
+        });
+    
+    var nodes = svg.selectAll("node").data(dataNodes, function (n) {
         return n.id;
     });
     
@@ -29,50 +92,15 @@ function startD3() {
         .append("circle")
             .attr("r", 0)
             .attr("class", "node")
+            .call(drag)
         .transition()
             .attr("r", 10);
 
     nodes
-        .attr("cx", function(n) {
-            return n.x; 
+        .attr("cx", function (n) {
+            return n.x;
         })
-        .attr("cy", function(n) { 
-            return n.y; 
-        });
-    
-    // LINKS :
-    var dataLinks = d3.range(20).map(function(value) { 
-        return {
-            id : "links_" + value,
-            target : "node_" + value, //TODO
-            source : "node_" + (value == 19 ? 0 : value + 1)
-        }; 
-    });
-    
-    var links = svg.selectAll("link").data(dataLinks);
-    
-    links.exit()
-        .remove();
-
-    links.enter()
-        .append("line")
-            .attr("class", "link");
-
-    links
-        .attr("x1", function(l) { 
-            var sourceNode = dataNodes.filter(function(n) {
-                return n.id == l.source;
-            })[0];
-
-            d3.select(this).attr("y1", sourceNode.y);
-            return sourceNode.x
-        })
-        .attr("x2", function(l) { 
-            var targetNode = dataNodes.filter(function(n) {
-                return n.id == l.target;
-            })[0];
-        
-            d3.select(this).attr("y2", targetNode.y);
-            return targetNode.x
+        .attr("cy", function (n) {
+            return n.y;
         });
 }

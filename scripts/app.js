@@ -7,16 +7,7 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function startD3() {
-    var width = window.innerWidth,
-        height = window.innerHeight;
-
-    var svg = d3.select("#d3")
-        .append("svg")
-            .attr("width", width)
-            .attr("height", height);
-    
-    // DATA :
+function getData(width, height) {
     var dataNodes = d3.range(20).map(function (value) {
         return {
             id : "node_" + value,
@@ -33,8 +24,25 @@ function startD3() {
         };
     });
     
+    return {
+        nodes : dataNodes,
+        links : dataLinks
+    };
+}
+
+function startD3() {
+    var width = window.innerWidth,
+        height = window.innerHeight;
+
+    var svg = d3.select("#d3")
+        .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+    
+    var data = getData(width, height);    
+    
     // LINKS :    
-    var links = svg.selectAll("link").data(dataLinks);
+    var links = svg.selectAll("link").data(data.links);
     
     links.exit()
         .remove();
@@ -79,7 +87,7 @@ function startD3() {
             });
         });
     
-    var nodes = svg.selectAll("node").data(dataNodes, function (n) {
+    var nodes = svg.selectAll("node").data(data.nodes, function (n) {
         return n.id;
     });
     

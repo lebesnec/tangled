@@ -22,22 +22,50 @@ function hexCorner(centerX, centerY, size, i) {
     };
 }
 
+var NB_TILES = 100,
+    NB_NODES = 20,
+    NB_LINKS = 20;
+
+function startD3() {
+    var width = window.innerWidth,
+        height = window.innerHeight;
+
+    var svg = d3.select("#d3")
+        .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+    
+    var data = getData(width, height);
+    var render = renderData(svg, data);   
+}
+
 function getData(width, height) {
-    var nbTiles = 100,
-        widthTile = Math.sqrt((width * height) / nbTiles),
+    var dataTiles = getDataTiles(width, height),
+        dataNodes = getDataNodes(width, height),
+        dataLinks = getDataLinks(dataNodes);
+    
+    return {
+        tiles : dataTiles,
+        nodes : dataNodes,
+        links : dataLinks
+    };
+}
+
+function getDataTiles(width, height) {
+    var widthTile = Math.sqrt((width * height) / NB_TILES),
         heightTile = (widthTile * 2) / Math.sqrt(3),
         sizeTile = heightTile / 2,
         row = 0,
         col = 0;
 
     //TODO bien callé la grid dans la page
-    var dataTiles = d3.range(nbTiles).map(function (value) {
+    var data = d3.range(NB_TILES).map(function (value) {
         row = row + 1;
         if (row * widthTile >= width) {
             row = 0;
             col = col + 1;
         }
-        var x = (row * widthTile) + (col % 2 == 1 ? (widthTile / 2) : 0),
+        var x = (row * widthTile) + (col % 2 === 1 ? (widthTile / 2) : 0),
             y = col * heightTile * 3 / 4;
         
         return {
@@ -57,7 +85,11 @@ function getData(width, height) {
         };
     });
     
-    var dataNodes = d3.range(20).map(function (value) {
+    return data;
+}
+
+function getDataNodes(width, height) {
+    var data = d3.range(NB_NODES).map(function (value) {
         return {
             id : "node_" + value,
             x : Math.random() * width,
@@ -65,7 +97,11 @@ function getData(width, height) {
         };
     });
     
-    var dataLinks = d3.range(20).map(function (value) {
+    return data;
+}
+
+function getDataLinks(dataNodes) {
+    var data = d3.range(NB_LINKS).map(function (value) {
         return {
             id : "links_" + value,
             target : dataNodes[getRandomInt(0, dataNodes.length - 1)],
@@ -73,26 +109,22 @@ function getData(width, height) {
         };
     });
     
+    return data;
+}
+
+function renderData(svg, data) {
+    var d3Tiles = renderTiles(svg, data);
+    var d3Links = renderLinks(svg, data);
+    var d3Nodes = renderNodes(svg, data, d3Links);
+    
     return {
-        tiles : dataTiles,
-        nodes : dataNodes,
-        links : dataLinks
+        tiles : d3Tiles,
+        links : d3Links,
+        nodes : d3Nodes
     };
 }
 
-function startD3() {
-    var width = window.innerWidth,
-        height = window.innerHeight;
-
-    var svg = d3.select("#d3")
-        .append("svg")
-            .attr("width", width)
-            .attr("height", height);
-    
-    var data = getData(width, height);
-    console.log(data);
-    
-    // TILES :
+function renderTiles(svg, data) {
     var tiles = svg.selectAll("tile").data(data.tiles);
     
     tiles.exit()
@@ -101,7 +133,8 @@ function startD3() {
     var tileGroup = tiles.enter()
         .append("g")
             .attr("class", "tile");
-    //TODO un seul tracé
+    
+    // center :
     tileGroup.append("circle")
         .attr("r", 2)
         .attr("cx", function (t) {
@@ -111,7 +144,9 @@ function startD3() {
             return t.y;
         });
     
-    for (var i = 0; i < 6; i ++) {
+    // outline :
+    //TODO un seul tracé ?
+    for (i = 0; i < 6; i ++) {
         tileGroup.append("line")
             .attr("x1", function (t) {
                 return t.corners[i].x;
@@ -127,7 +162,10 @@ function startD3() {
             });
     }
     
-    // LINKS :    
+    return tiles;
+}
+
+function renderLinks(svg, data) {
     var links = svg.selectAll("link").data(data.links);
     
     links.exit()
@@ -152,7 +190,10 @@ function startD3() {
             return l.target.y;
         });
     
-    // NODES :
+    return links;
+}
+
+function renderNodes(svg, data, links) {
     var drag = d3.behavior.drag()
         .on("drag", function (n) {
             n.x += d3.event.dx;
@@ -197,4 +238,6 @@ function startD3() {
         .attr("cy", function (n) {
             return n.y;
         });
+    
+    return nodes;
 }

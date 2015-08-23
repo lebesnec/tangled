@@ -1,24 +1,20 @@
 var Tiles = {
     
     getDataTiles : function (width, height) {
-        var widthTile = Math.sqrt((width * height) / NB_TILES),
-            heightTile = (widthTile * 2) / Math.sqrt(3),
-            sizeTile = heightTile / 2,
+        var widthTile = (width / NB_TILES_PER_ROW),
+            heightTile = ((widthTile * 2) / Math.sqrt(3)),
+            sizeTile = (heightTile / 2),
+            col = 0,
             row = 0,
-            col = 0;
+            data = [],
+            stop = false;
 
-        //TODO bien callé la grid dans la page
-        var data = d3.range(NB_TILES).map(function (value) {
-            row = row + 1;
-            if (row * widthTile >= width) {
-                row = 0;
-                col = col + 1;
-            }
-            var x = (row * widthTile) + (col % 2 === 1 ? (widthTile / 2) : 0),
-                y = col * heightTile * 3 / 4;
+        while (!stop) {
+            var x = (col * widthTile) + (row % 2 === 1 ? widthTile : (widthTile / 2)),
+                y = (row * heightTile * 3 / 4) + sizeTile;
 
-            return {
-                id : "tile_" + value,
+            var tile = {
+                id : "tile_" + col + "_" + row,
                 x : x,
                 y : y,
                 col : col,
@@ -32,7 +28,15 @@ var Tiles = {
                     hexCorner(x, y, sizeTile, 5)
                 ]
             };
-        });
+            data.push(tile);
+            
+            col = col + 1;
+            if (col >= ((row % 2 === 0) ? NB_TILES_PER_ROW : NB_TILES_PER_ROW - 1)) {
+                col = 0;
+                row = row + 1;
+            }
+            stop = ((row * heightTile * 3 / 4) + heightTile >= height);
+        }
 
         return data;
     },
@@ -49,7 +53,7 @@ var Tiles = {
 
         // center :
         tileGroup.append("circle")
-            .attr("r", 2)
+            .attr("r", 1)
             .attr("cx", function (t) {
                 return t.x;
             })
@@ -59,7 +63,8 @@ var Tiles = {
 
         // outline :
         //TODO un seul tracé ?
-        for (var i = 0; i < 6; i++) {
+        //TODO trais manquant
+        for (var i = 0; i < 3; i++) {
             tileGroup.append("line")
                 .attr("x1", function (t) {
                     return t.corners[i].x;

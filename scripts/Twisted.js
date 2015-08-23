@@ -1,4 +1,4 @@
-var NB_TILES = 100,
+var NB_TILES_PER_ROW = 50,
     NB_NODES = 20,
     NB_LINKS = 20;
 
@@ -36,14 +36,14 @@ var Twisted = {
     },
 
     renderData : function (svg) {
-        var d3Tiles = Tiles.renderTiles(this.svg, this.data),
-            d3Links = Links.renderLinks(this.svg, this.data),
-            d3Nodes = Nodes.renderNodes(this.svg, this.data, d3Links);
+        var d3Tiles = Tiles.renderTiles(this.svg, this.data);
+            //d3Links = Links.renderLinks(this.svg, this.data),
+            //d3Nodes = Nodes.renderNodes(this.svg, this.data, d3Links);
 
         this.render = {
             tiles : d3Tiles,
-            links : d3Links,
-            nodes : d3Nodes
+            //links : d3Links,
+            //nodes : d3Nodes
         };
     }
 

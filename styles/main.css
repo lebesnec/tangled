@@ -7,11 +7,15 @@ body {
     overflow: hidden;
 }
 
-.tile {
+.tile circle {
     stroke: silver;
     stroke-width: 1;
 }
 
+.tile line {
+    stroke: #dedede;
+    stroke-width: 1;
+}
 
 .node {
     fill: blue;

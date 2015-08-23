@@ -7,7 +7,53 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+/**
+ * http://www.redblobgames.com/grids/hexagons/#basics
+ * In a regular hexagon the interior angles are 120°. 
+ * There are six “wedges”, each an equilateral triangle with 60° angles inside. 
+ * Corner i is at (60° * i), size units away from the center.
+ */
+function hexCorner(centerX, centerY, size, i) {
+    var angleRad = (Math.PI / 180) * (60 * i);
+    
+    return {
+        x : centerX + (size * Math.cos(angleRad)),
+        y : centerY + (size * Math.sin(angleRad))
+    };
+}
+
 function getData(width, height) {
+    var nbTiles = 100,
+        sizeTile = Math.round(Math.sqrt((width * height) / nbTiles)),
+        row = 0,
+        col = 0;
+
+    var dataTiles = d3.range(nbTiles).map(function (value) {
+        row = row + 1;
+        if (row * sizeTile > width) {
+            row = 0;
+            col = col + 1;
+        }
+        var x = row * sizeTile,
+            y = col * sizeTile;
+        
+        return {
+            id : "tile_" + value,
+            x : x,
+            y : y,
+            col : col,
+            row : row,
+            corner : [
+                hexCorner(x, y, sizeTile, 0),
+                hexCorner(x, y, sizeTile, 1),
+                hexCorner(x, y, sizeTile, 2),
+                hexCorner(x, y, sizeTile, 3),
+                hexCorner(x, y, sizeTile, 4),
+                hexCorner(x, y, sizeTile, 5)
+            ]
+        };
+    });
+    
     var dataNodes = d3.range(20).map(function (value) {
         return {
             id : "node_" + value,
@@ -25,6 +71,7 @@ function getData(width, height) {
     });
     
     return {
+        tiles : dataTiles,
         nodes : dataNodes,
         links : dataLinks
     };
@@ -39,7 +86,31 @@ function startD3() {
             .attr("width", width)
             .attr("height", height);
     
-    var data = getData(width, height);    
+    var data = getData(width, height);
+    console.log(data);
+    
+    // TILES :
+    var tiles = svg.selectAll("tile").data(data.tiles);
+    
+    tiles.exit()
+        .transition()
+            .attr("r", 0)
+        .remove();
+
+    tiles.enter()
+        .append("circle")
+            .attr("r", 0)
+            .attr("class", "tile")
+        .transition()
+            .attr("r", 10);
+
+    tiles
+        .attr("cx", function (n) {
+            return n.x;
+        })
+        .attr("cy", function (n) {
+            return n.y;
+        });
     
     // LINKS :    
     var links = svg.selectAll("link").data(data.links);

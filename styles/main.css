@@ -7,8 +7,14 @@ body {
     overflow: hidden;
 }
 
+.tile {
+    stroke: silver;
+    stroke-width: 1;
+}
+
+
 .node {
-  fill: blue;
+    fill: blue;
 }
 
 .link {

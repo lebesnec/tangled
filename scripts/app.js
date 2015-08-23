@@ -14,7 +14,7 @@ function getRandomInt(min, max) {
  * Corner i is at (60° * i), size units away from the center.
  */
 function hexCorner(centerX, centerY, size, i) {
-    var angleRad = (Math.PI / 180) * (60 * i);
+    var angleRad = (Math.PI / 180) * ((60 * i) + 30);
     
     return {
         x : centerX + (size * Math.cos(angleRad)),
@@ -24,18 +24,21 @@ function hexCorner(centerX, centerY, size, i) {
 
 function getData(width, height) {
     var nbTiles = 100,
-        sizeTile = Math.round(Math.sqrt((width * height) / nbTiles)),
+        widthTile = Math.sqrt((width * height) / nbTiles),
+        heightTile = (widthTile * 2) / Math.sqrt(3),
+        sizeTile = heightTile / 2,
         row = 0,
         col = 0;
 
+    //TODO bien callé la grid dans la page
     var dataTiles = d3.range(nbTiles).map(function (value) {
         row = row + 1;
-        if (row * sizeTile > width) {
+        if (row * widthTile >= width) {
             row = 0;
             col = col + 1;
         }
-        var x = row * sizeTile,
-            y = col * sizeTile;
+        var x = (row * widthTile) + (col % 2 == 1 ? (widthTile / 2) : 0),
+            y = col * heightTile * 3 / 4;
         
         return {
             id : "tile_" + value,
@@ -43,7 +46,7 @@ function getData(width, height) {
             y : y,
             col : col,
             row : row,
-            corner : [
+            corners : [
                 hexCorner(x, y, sizeTile, 0),
                 hexCorner(x, y, sizeTile, 1),
                 hexCorner(x, y, sizeTile, 2),
@@ -93,24 +96,36 @@ function startD3() {
     var tiles = svg.selectAll("tile").data(data.tiles);
     
     tiles.exit()
-        .transition()
-            .attr("r", 0)
         .remove();
 
-    tiles.enter()
-        .append("circle")
-            .attr("r", 0)
-            .attr("class", "tile")
-        .transition()
-            .attr("r", 10);
-
-    tiles
-        .attr("cx", function (n) {
-            return n.x;
+    var tileGroup = tiles.enter()
+        .append("g")
+            .attr("class", "tile");
+    //TODO un seul tracé
+    tileGroup.append("circle")
+        .attr("r", 2)
+        .attr("cx", function (t) {
+            return t.x;
         })
-        .attr("cy", function (n) {
-            return n.y;
+        .attr("cy", function (t) {
+            return t.y;
         });
+    
+    for (var i = 0; i < 6; i ++) {
+        tileGroup.append("line")
+            .attr("x1", function (t) {
+                return t.corners[i].x;
+            })
+            .attr("y1", function (t) {
+                return t.corners[i].y;
+            })
+            .attr("x2", function (t) {
+                return t.corners[(i + 1) % 6].x;
+            })
+            .attr("y2", function (t) {
+                return t.corners[(i + 1) % 6].y;
+            });
+    }
     
     // LINKS :    
     var links = svg.selectAll("link").data(data.links);
@@ -127,7 +142,7 @@ function startD3() {
             return l.source.x;
         })
         .attr("y1", function (l) {
-            d3.select(this).attr("y1", l.source.y);
+            d3.select(this).attr("y1", l.source.y);//TODO ?
             return l.source.y;
         })
         .attr("x2", function (l) {

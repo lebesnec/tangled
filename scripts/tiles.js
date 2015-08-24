@@ -20,12 +20,12 @@ var Tiles = {
                 col : col,
                 row : row,
                 corners : [
-                    hexCorner(x, y, sizeTile, 0),
-                    hexCorner(x, y, sizeTile, 1),
-                    hexCorner(x, y, sizeTile, 2),
-                    hexCorner(x, y, sizeTile, 3),
-                    hexCorner(x, y, sizeTile, 4),
-                    hexCorner(x, y, sizeTile, 5)
+                    this.hexCorner(x, y, sizeTile, 0),
+                    this.hexCorner(x, y, sizeTile, 1),
+                    this.hexCorner(x, y, sizeTile, 2),
+                    this.hexCorner(x, y, sizeTile, 3),
+                    this.hexCorner(x, y, sizeTile, 4),
+                    this.hexCorner(x, y, sizeTile, 5)
                 ]
             };
             data.push(tile);
@@ -40,8 +40,24 @@ var Tiles = {
 
         return data;
     },
+    
+    /**
+     * http://www.redblobgames.com/grids/hexagons/#basics
+     * In a regular hexagon the interior angles are 120°. 
+     * There are six “wedges”, each an equilateral triangle with 60° angles inside. 
+     * Corner i is at (60° * i), size units away from the center.
+     */
+    hexCorner : function (centerX, centerY, size, i) {
+        var angleRad = (Math.PI / 180) * ((60 * i) + 30);
+
+        return {
+            x : centerX + (size * Math.cos(angleRad)),
+            y : centerY + (size * Math.sin(angleRad))
+        };
+    },
 
     renderTiles : function (svg, data) {
+        var me = this;
         var tiles = svg.selectAll("tile").data(data.tiles);
 
         tiles.exit()
@@ -62,25 +78,59 @@ var Tiles = {
             });
 
         // outline :
-        //TODO un seul tracé ?
-        //TODO trais manquant
-        for (var i = 0; i < 3; i++) {
-            tileGroup.append("line")
-                .attr("x1", function (t) {
-                    return t.corners[i].x;
-                })
-                .attr("y1", function (t) {
-                    return t.corners[i].y;
-                })
-                .attr("x2", function (t) {
-                    return t.corners[(i + 1) % 6].x;
-                })
-                .attr("y2", function (t) {
-                    return t.corners[(i + 1) % 6].y;
-                });
+        for (var i = 0; i < 6; i++) {
+            this.renderSide(i, tileGroup);
         }
+        
+        /*this.renderSide(0, tileGroup);
+        this.renderSide(4, tileGroup);
+        this.renderSide(5, tileGroup);
+        
+        tileGroup
+            .filter(function (t) {
+                return t.row == 0;
+            })
+            .each(function (t) {
+                me.renderSide(3, d3.select(this));
+            });
+        
+        tileGroup
+            .filter(function (t) {
+                return t.col == 0;
+            })
+            .each(function (t) {
+                me.renderSide(1, d3.select(this));
+                me.renderSide(2, d3.select(this));
+                me.renderSide(3, d3.select(this));
+            });
+        
+        tileGroup
+            .filter(function (t) {
+                return t.col == 0;
+            })
+            .each(function (t) {
+                me.renderSide(1, d3.select(this));
+                me.renderSide(2, d3.select(this));
+                me.renderSide(3, d3.select(this));
+            });*/
 
         return tiles;
+    },
+    
+    renderSide : function (i, tileGroup) {
+        tileGroup.append("line")
+            .attr("x1", function (t) {
+                return t.corners[i].x;
+            })
+            .attr("y1", function (t) {
+                return t.corners[i].y;
+            })
+            .attr("x2", function (t) {
+                return t.corners[(i + 1) % 6].x;
+            })
+            .attr("y2", function (t) {
+                return t.corners[(i + 1) % 6].y;
+            });
     }
 
 };

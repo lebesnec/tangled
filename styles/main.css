@@ -8,7 +8,7 @@ body {
 }
 
 .tile circle {
-    stroke: silver;
+    stroke: #bfbfbf;
     stroke-width: 1;
 }
 
@@ -18,10 +18,12 @@ body {
 }
 
 .node {
-    fill: blue;
+    fill: #5a5a5a;
+    stroke: #343434;
+    stroke-width: 2;
 }
 
 .link {
-    stroke: red;
+    stroke: #bf0000;
     stroke-width: 2;
 }

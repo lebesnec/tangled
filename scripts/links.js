@@ -6,21 +6,12 @@ var Links = {
         var data = d3.range(NB_LINKS).map(function (value) {
             return {
                 id : "links_" + value,
-                target : dataNodes[me.getRandomInt(0, dataNodes.length - 1)],
-                source : dataNodes[me.getRandomInt(0, dataNodes.length - 1)]
+                target : dataNodes[getRandomInt(0, dataNodes.length - 1)],
+                source : dataNodes[getRandomInt(0, dataNodes.length - 1)]
             };
         });
 
         return data;
-    },
-    
-    /**
-     * http://stackoverflow.com/questions/1527803/generating-random-numbers-in-javascript-in-a-specific-range
-     * Returns a random integer between min (inclusive) and max (inclusive)
-     * Using Math.round() will give you a non-uniform distribution!
-     */
-    getRandomInt : function (min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
     },
 
     renderLinks : function (svg, data) {

@@ -1,15 +1,29 @@
 var Nodes = {
 
-    getDataNodes : function (width, height) {
+    getDataNodes : function (dataTiles) {
+        var me = this;
+        
         var data = d3.range(NB_NODES).map(function (value) {
+            var randomTile = me.getRandomTile(dataTiles);
             return {
                 id : "node_" + value,
-                x : Math.random() * width,
-                y : Math.random() * height
+                x : randomTile.x,
+                y : randomTile.y
             };
         });
 
         return data;
+    },
+    
+    getRandomTile : function(dataTiles) {
+        var randomTile = dataTiles[getRandomInt(0, dataTiles.length - 1)];
+        
+        if (randomTile.node != null) {
+            return this.getRandomTile(dataTiles);
+        } else {
+            randomTile.node = this;
+            return randomTile;
+        }
     },
 
     renderNodes : function (svg, data, links) {

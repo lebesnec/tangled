@@ -19,6 +19,7 @@ var Tiles = {
                 y : y,
                 col : col,
                 row : row,
+                node : null,
                 corners : [
                     this.hexCorner(x, y, sizeTile, 0),
                     this.hexCorner(x, y, sizeTile, 1),

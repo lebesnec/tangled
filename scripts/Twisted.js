@@ -47,7 +47,7 @@ var Twisted = {
     renderData : function (svg) {
         var d3Tiles = Tiles.renderTiles(this.svg, this.data),
             d3Links = Links.renderLinks(this.svg, this.data),
-            d3Nodes = Nodes.renderNodes(this.svg, this.data, d3Links);
+            d3Nodes = Nodes.renderNodes(this.svg, this.data, d3Tiles, d3Links);
 
         this.render = {
             tiles : d3Tiles,

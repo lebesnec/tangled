@@ -1,30 +1,42 @@
 var Nodes = {
 
     getDataNodes : function (dataTiles) {
-        var me = this;
+        var me = this,
+            nbNodesRow = Math.ceil(Math.sqrt((NB_NODES * dataTiles.nbCol) / dataTiles.nbRow)),
+            nbNodesCol = Math.ceil(NB_NODES / nbNodesRow),
+            nb = 0,
+            data = [];
         
-        var data = d3.range(NB_NODES).map(function (value) {
-            var randomTile = me.getRandomTile(dataTiles);
-            return {
-                id : "node_" + value,
-                x : randomTile.x,
-                y : randomTile.y,
-                tile : randomTile
-            };
-        });
+        for (var i = 0; i < nbNodesCol; i++) {
+            for (var j = 0; j < nbNodesRow; j++) {
+                if (nb < NB_NODES) {
+                    nb++;
+                    var tile = me.getTileAt(dataTiles.data, i, j);
+                    data.push({
+                        id : "node_" + i + "_" + j,
+                        x : tile.x,
+                        y : tile.y,
+                        tile : tile
+                    });
+                }
+            }
+        }
 
         return data;
     },
     
-    getRandomTile : function(dataTiles) {
-        var randomTile = dataTiles[getRandomInt(0, dataTiles.length - 1)];
+    getTileAt : function (tiles, row, col) {
+        var result = null;
         
-        if (randomTile.node != null) {
-            return this.getRandomTile(dataTiles);
-        } else {
-            randomTile.node = this;
-            return randomTile;
-        }
+        for (var i = 0; i < tiles.length; i++) {
+            var tile = tiles[i];
+            if (tile.row == row && tile.col == col) {
+                result = tile;
+                break;
+            }
+        };
+        
+        return result;
     },
 
     renderNodes : function (svg, data, tiles, links) {
@@ -85,11 +97,11 @@ var Nodes = {
         return nodes;
     },
     
-    getNearestAvailableTile  : function(node, x, y, tiles) {
+    getNearestAvailableTile  : function (node, x, y, tiles) {
         var minDistance = 999999,
             nearestTile = null;
         
-        tiles.each(function(tile) {
+        tiles.each(function (tile) {
             // ignore tiles with a node, except if it's the node currently dragged :
             if (tile.node == null || tile.node == node) {
                 var lx = tile.x - x,
@@ -103,7 +115,7 @@ var Nodes = {
             }
         });
         
-        // not working after a drop :(
+        // not working after a drop :( TODO
         /*nearestTile.node = node;
         if (node.tile != null) {
             if (node.tile.node != node) {

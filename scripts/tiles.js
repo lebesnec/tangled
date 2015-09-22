@@ -31,15 +31,20 @@ var Tiles = {
             };
             data.push(tile);
             
-            col = col + 1;
+            col ++;
             if (col >= ((row % 2 === 0) ? NB_TILES_PER_ROW : NB_TILES_PER_ROW - 1)) {
                 col = 0;
                 row = row + 1;
+                
             }
             stop = ((row * heightTile * 3 / 4) + heightTile >= height);
         }
 
-        return data;
+        return {
+            data : data,
+            nbCol : NB_TILES_PER_ROW,
+            nbRow : row
+        };
     },
     
     /**

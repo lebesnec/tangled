@@ -1,5 +1,5 @@
 var NB_TILES_PER_ROW = 25,
-    NB_NODES = 20,
+    NB_NODES = 100,
     NB_LINKS = 25;
 
 /**
@@ -38,7 +38,7 @@ var Twisted = {
             dataLinks = Links.getDataLinks(dataNodes);
 
         this.data = {
-            tiles : dataTiles,
+            tiles : dataTiles.data,
             nodes : dataNodes,
             links : dataLinks
         };

@@ -12,12 +12,14 @@ var Nodes = {
                 if (nb < NB_NODES) {
                     nb++;
                     var tile = me.getTileAt(dataTiles.data, i, j);
-                    data.push({
+                    var node = {
                         id : "node_" + i + "_" + j,
                         x : tile.x,
                         y : tile.y,
                         tile : tile
-                    });
+                    };
+                    tile.node = node;
+                    data.push(node);
                 }
             }
         }
@@ -114,14 +116,6 @@ var Nodes = {
                 }
             }
         });
-        
-        // not working after a drop :( TODO
-        /*nearestTile.node = node;
-        if (node.tile != null) {
-            if (node.tile.node != node) {
-                node.tile.node = null;
-            }            
-        }*/
         
         // clean the previous tile of the node being dragged :
         if (node.tile != null) {

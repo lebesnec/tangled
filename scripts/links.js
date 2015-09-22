@@ -1,8 +1,6 @@
 var Links = {
 
     getDataLinks : function (dataNodes) {
-        var me = this;
-        
         var data = d3.range(NB_LINKS).map(function (value) {
             return {
                 id : "links_" + value,
@@ -29,7 +27,6 @@ var Links = {
                 return l.source.x;
             })
             .attr("y1", function (l) {
-                //d3.select(this).attr("y1", l.source.y);//TODO ?
                 return l.source.y;
             })
             .attr("x2", function (l) {

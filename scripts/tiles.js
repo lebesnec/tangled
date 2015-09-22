@@ -31,7 +31,7 @@ var Tiles = {
             };
             data.push(tile);
             
-            col ++;
+            col++;
             if (col >= ((row % 2 === 0) ? NB_TILES_PER_ROW : NB_TILES_PER_ROW - 1)) {
                 col = 0;
                 row = row + 1;
@@ -63,7 +63,6 @@ var Tiles = {
     },
 
     renderTiles : function (svg, data) {
-        var me = this;
         var tiles = svg.selectAll("tile").data(data.tiles);
 
         tiles.exit()
@@ -87,38 +86,6 @@ var Tiles = {
         for (var i = 0; i < 6; i++) {
             this.renderSide(i, tileGroup);
         }
-        
-        /*this.renderSide(0, tileGroup);
-        this.renderSide(4, tileGroup);
-        this.renderSide(5, tileGroup);
-        
-        tileGroup
-            .filter(function (t) {
-                return t.row == 0;
-            })
-            .each(function (t) {
-                me.renderSide(3, d3.select(this));
-            });
-        
-        tileGroup
-            .filter(function (t) {
-                return t.col == 0;
-            })
-            .each(function (t) {
-                me.renderSide(1, d3.select(this));
-                me.renderSide(2, d3.select(this));
-                me.renderSide(3, d3.select(this));
-            });
-        
-        tileGroup
-            .filter(function (t) {
-                return t.col == 0;
-            })
-            .each(function (t) {
-                me.renderSide(1, d3.select(this));
-                me.renderSide(2, d3.select(this));
-                me.renderSide(3, d3.select(this));
-            });*/
 
         return tiles;
     },

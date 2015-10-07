@@ -4,6 +4,8 @@ var Nodes = {
         var me = this,
             nbNodesRow = Math.ceil(Math.sqrt((NB_NODES * dataTiles.nbCol) / dataTiles.nbRow)),
             nbNodesCol = Math.ceil(NB_NODES / nbNodesRow),
+            deltaRow = Math.ceil((dataTiles.nbRow - nbNodesCol) / 2),
+            deltaCol = Math.ceil((dataTiles.nbCol - nbNodesRow) / 2),
             nb = 0,
             data = [];
         
@@ -11,7 +13,7 @@ var Nodes = {
             for (var j = 0; j < nbNodesRow; j++) {
                 if (nb < NB_NODES) {
                     nb++;
-                    var tile = me.getTileAt(dataTiles.data, i, j);
+                    var tile = Tiles.getTileAt(dataTiles.data, i + deltaRow, j + deltaCol);
                     var node = {
                         id : "node_" + i + "_" + j,
                         x : tile.x,
@@ -25,20 +27,6 @@ var Nodes = {
         }
 
         return data;
-    },
-    
-    getTileAt : function (tiles, row, col) {
-        var result = null;
-        
-        for (var i = 0; i < tiles.length; i++) {
-            var tile = tiles[i];
-            if (tile.row == row && tile.col == col) {
-                result = tile;
-                break;
-            }
-        };
-        
-        return result;
     },
 
     renderNodes : function (svg, data, tiles, links) {

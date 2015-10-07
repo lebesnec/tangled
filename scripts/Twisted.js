@@ -35,7 +35,7 @@ var Twisted = {
     initData : function () {
         var dataTiles = Tiles.getDataTiles(this.width, this.height),
             dataNodes = Nodes.getDataNodes(dataTiles),
-            dataLinks = Links.getDataLinks(dataNodes);
+            dataLinks = Links.getDataLinks(dataTiles, dataNodes);
 
         this.data = {
             tiles : dataTiles.data,

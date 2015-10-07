@@ -61,6 +61,20 @@ var Tiles = {
             y : centerY + (size * Math.sin(angleRad))
         };
     },
+    
+    getTileAt : function (tiles, row, col) {
+        var result = null;
+        
+        for (var i = 0; i < tiles.length; i++) {
+            var tile = tiles[i];
+            if (tile.row == row && tile.col == col) {
+                result = tile;
+                break;
+            }
+        };
+        
+        return result;
+    },
 
     renderTiles : function (svg, data) {
         var tiles = svg.selectAll("tile").data(data.tiles);

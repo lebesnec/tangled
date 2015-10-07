@@ -1,15 +1,59 @@
 var Links = {
 
-    getDataLinks : function (dataNodes) {
-        var data = d3.range(NB_LINKS).map(function (value) {
-            return {
-                id : "links_" + value,
-                target : dataNodes[getRandomInt(0, dataNodes.length - 1)],
-                source : dataNodes[getRandomInt(0, dataNodes.length - 1)]
-            };
-        });
+    getDataLinks : function (dataTiles, dataNodes) {
+        var data = [];
+        
+        for (var i = 0; i < dataNodes.length; i++) {
+            var node = dataNodes[i],
+                tile = node.tile,
+                rowOffset = (tile.row % 2);
+            
+            // get the neighbour tiles :
+            var tile1 = Tiles.getTileAt(dataTiles.data, tile.row, tile.col - 1);
+            var tile2 = Tiles.getTileAt(dataTiles.data, tile.row - 1, tile.col - 1 + rowOffset);
+            var tile3 = Tiles.getTileAt(dataTiles.data, tile.row - 1, tile.col + rowOffset);
+            
+            var link1 = this.createLink(tile, tile1, false);
+            if (link1 != null) {
+                data.push(link1);
+            }
+            var link2 = this.createLink(tile, tile2, false);
+            if (link2 != null) {
+                data.push(link2);
+            }
+            var link3 = this.createLink(tile, tile3, (link1 == null && link2 == null));
+            if (link3 != null) {
+                data.push(link3);
+            }
+            
+           /* // fix the first row of dot :
+            if (link1 == null && link2 == null && link3 == null) {
+                link1 = this.createLink(tile, tile1, true);
+                if (link1 != null) {
+                    data.push(link1);
+                }
+            }*/
+        }
 
         return data;
+    },
+    
+    createLink : function(sourceTile, targetTile, forceCreation) {
+        var link = null;
+        
+        if (targetTile != null && targetTile.node != null) {
+            var ok = forceCreation || (getRandomInt(0, 1) == 1);
+            if (ok) {
+                link = {
+                    id : "links_" + sourceTile.row + "_" + sourceTile.col 
+                                  + "_" + targetTile.row + "_" + targetTile.col,
+                    target : targetTile.node,
+                    source : sourceTile.node
+                };
+            }
+        }
+        
+        return link;
     },
 
     renderLinks : function (svg, data) {

@@ -1,56 +1,69 @@
 var Links = {
 
     getDataLinks : function (dataTiles, dataNodes) {
-        var data = [];
+        var dataLinks = [];
+        var result = [];
         
+        // generate all possible links :
         for (var i = 0; i < dataNodes.length; i++) {
             var node = dataNodes[i],
                 tile = node.tile,
-                rowOffset = (tile.row % 2);
+                rowOffset = (tile.row % 2),
+                // get the left and 2 top neighbours tiles :
+                tile1 = Tiles.getTileAt(dataTiles.data, tile.row, tile.col - 1),
+                tile2 = Tiles.getTileAt(dataTiles.data, tile.row - 1, tile.col - 1 + rowOffset),
+                tile3 = Tiles.getTileAt(dataTiles.data, tile.row - 1, tile.col + rowOffset), 
+                // create a link from the current node to these nodes :
+                link1 = this.createLink(tile, tile1),
+                link2 = this.createLink(tile, tile2),
+                link3 = this.createLink(tile, tile3);
             
-            // get the neighbour tiles :
-            var tile1 = Tiles.getTileAt(dataTiles.data, tile.row, tile.col - 1);
-            var tile2 = Tiles.getTileAt(dataTiles.data, tile.row - 1, tile.col - 1 + rowOffset);
-            var tile3 = Tiles.getTileAt(dataTiles.data, tile.row - 1, tile.col + rowOffset);
-            
-            var link1 = this.createLink(tile, tile1, false);
             if (link1 != null) {
-                data.push(link1);
-            }
-            var link2 = this.createLink(tile, tile2, false);
+                dataLinks.push(link1);
+            }            
             if (link2 != null) {
-                data.push(link2);
+                dataLinks.push(link2);
             }
-            var link3 = this.createLink(tile, tile3, (link1 == null && link2 == null));
             if (link3 != null) {
-                data.push(link3);
+                dataLinks.push(link3);
+            }
+        }
+        
+        // remove some links randomly :
+        for (var i = 0; i < dataLinks.length; i++) {
+            var removeLink = (getRandomInt(0, LINKS_DENSITY) == 0),
+                link = dataLinks[i];
+            
+            // test if no node will be left alone :
+            if (link.target.linksCount == 1 || link.source.linksCount == 1) {
+                removeLink = false;
             }
             
-           /* // fix the first row of dot :
-            if (link1 == null && link2 == null && link3 == null) {
-                link1 = this.createLink(tile, tile1, true);
-                if (link1 != null) {
-                    data.push(link1);
-                }
-            }*/
+            if (removeLink) {
+                link.source.linksCount --;
+                link.target.linksCount --;
+                
+            } else {
+                result.push(link);
+            }
         }
+        
 
-        return data;
+        return result;
     },
     
-    createLink : function(sourceTile, targetTile, forceCreation) {
+    createLink : function(sourceTile, targetTile) {
         var link = null;
         
         if (targetTile != null && targetTile.node != null) {
-            var ok = forceCreation || (getRandomInt(0, 1) == 1);
-            if (ok) {
-                link = {
-                    id : "links_" + sourceTile.row + "_" + sourceTile.col 
-                                  + "_" + targetTile.row + "_" + targetTile.col,
-                    target : targetTile.node,
-                    source : sourceTile.node
-                };
-            }
+            link = {
+                id : "links_" + sourceTile.row + "_" + sourceTile.col + "_" + targetTile.row + "_" + targetTile.col,
+                target : targetTile.node,
+                source : sourceTile.node
+            };
+            
+            targetTile.node.linksCount ++;
+            sourceTile.node.linksCount ++;
         }
         
         return link;

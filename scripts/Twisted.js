@@ -1,6 +1,6 @@
 var NB_TILES_PER_ROW = 25,
     NB_NODES = 100,
-    NB_LINKS = 25;
+    LINKS_DENSITY = 1;
 
 /**
  * http://stackoverflow.com/questions/1527803/generating-random-numbers-in-javascript-in-a-specific-range
@@ -36,6 +36,8 @@ var Twisted = {
         var dataTiles = Tiles.getDataTiles(this.width, this.height),
             dataNodes = Nodes.getDataNodes(dataTiles),
             dataLinks = Links.getDataLinks(dataTiles, dataNodes);
+        
+        Nodes.shuffle(dataNodes, dataTiles);
 
         this.data = {
             tiles : dataTiles.data,

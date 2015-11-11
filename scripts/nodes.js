@@ -18,7 +18,8 @@ var Nodes = {
                         id : "node_" + i + "_" + j,
                         x : tile.x,
                         y : tile.y,
-                        tile : tile
+                        tile : tile,
+                        linksCount : 0
                     };
                     tile.node = node;
                     data.push(node);
@@ -27,6 +28,21 @@ var Nodes = {
         }
 
         return data;
+    },
+    
+    shuffle : function(dataNodes, dataTiles) {console.log(dataTiles);
+        for (var i = 0; i < dataNodes.length; i++) {            
+            var node = dataNodes[i],
+                randomRow = getRandomInt(0, dataTiles.nbRow - 2),//TODO
+                randomCol = getRandomInt(0, dataTiles.nbCol - 2),//TODO
+                randomTile = Tiles.getTileAt(dataTiles.data, randomRow, randomCol);
+            
+            //TODO check that the node is free
+            
+            node.tile = randomTile;
+            node.x = randomTile.x;
+            node.y = randomTile.y;
+        }
     },
 
     renderNodes : function (svg, data, tiles, links) {

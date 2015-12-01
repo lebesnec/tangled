@@ -1,11 +1,19 @@
 var NB_TILES_PER_ROW = 25,
     NB_NODES = 100,
-    LINKS_DENSITY = 1;
+    LINKS_DENSITY = 1,
+    // Style :
+    SIZE_NODE = 20,
+    SIZE_NODE_DRAGGED = 25,
+    FILL_COLOR = '#575757',
+    FILL_COLOR_DRAGGED = '#567dff',
+    STROKE_COLOR = '#343434',    
+    STROKE_COLOR_DRAGGED = '#3e6bff',
+    STROKE_WIDTH = 2,
+    STROKE_WIDTH_DRAGGED = 3,
+    DRAG_ANMIATION_DURATION_MS = 500;
 
 /**
  * http://stackoverflow.com/questions/1527803/generating-random-numbers-in-javascript-in-a-specific-range
- * Returns a random integer between min (inclusive) and max (inclusive)
- * Using Math.round() will give you a non-uniform distribution!
  */
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -37,7 +45,7 @@ var Twisted = {
             dataNodes = Nodes.getDataNodes(dataTiles),
             dataLinks = Links.getDataLinks(dataTiles, dataNodes);
         
-        Nodes.shuffle(dataNodes, dataTiles);
+        Nodes.shuffle(dataNodes, dataTiles)
 
         this.data = {
             tiles : dataTiles.data,

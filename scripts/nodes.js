@@ -30,51 +30,28 @@ var Nodes = {
         return data;
     },
     
-    shuffle : function(dataNodes, dataTiles) {console.log(dataTiles);
+    shuffle : function(dataNodes, dataTiles) {
         for (var i = 0; i < dataNodes.length; i++) {            
             var node = dataNodes[i],
-                randomRow = getRandomInt(0, dataTiles.nbRow - 2),//TODO
-                randomCol = getRandomInt(0, dataTiles.nbCol - 2),//TODO
-                randomTile = Tiles.getTileAt(dataTiles.data, randomRow, randomCol);
+                randomTile = Tiles.getRandomEmptyTile(dataTiles);
             
-            //TODO check that the node is free
-            
-            node.tile = randomTile;
-            node.x = randomTile.x;
-            node.y = randomTile.y;
+            Nodes.moveNodeToTile(node, randomTile);
         }
+    },
+    
+    moveNodeToTile : function(node, tile) {
+        // clean the current tile of the node :
+        if (node.tile != null) {
+            node.tile.node = null;
+        }
+        
+        node.tile = tile;
+        node.tile.node = node;        
+        node.x = tile.x;
+        node.y = tile.y;
     },
 
     renderNodes : function (svg, data, tiles, links) {
-        var drag = d3.behavior.drag()
-            .on("drag", function (n) {
-                var nearestTile = Nodes.getNearestAvailableTile(n, d3.event.x, d3.event.y, tiles);
-                n.x = nearestTile.x;
-                n.y = nearestTile.y;                
-              
-                d3.select(this)
-                    .attr("cx", n.x)
-                    .attr("cy", n.y)
-                    .attr("r", 20)
-                    .attr("class", "draggedNode");
-                links.each(function (l) {
-                    if (l.source === n) {
-                       d3.select(this)
-                           .attr("x1", n.x)
-                           .attr("y1", n.y);
-                    } else if (l.target === n) {
-                       d3.select(this)
-                           .attr("x2", n.x)
-                           .attr("y2", n.y);
-                    }
-                });
-            })
-            .on("dragend", function (n) {
-                d3.select(this)
-                    .attr("r", 10)
-                    .attr("class", "node");
-            });
-
         var nodes = svg.selectAll("node").data(data.nodes, function (n) {
             return n.id;
         });
@@ -88,9 +65,12 @@ var Nodes = {
             .append("circle")
                 .attr("r", 0)
                 .attr("class", "node")
-                .call(drag)
-            .transition()
-                .attr("r", 10);
+                .style("fill", FILL_COLOR)
+                .style("stroke", STROKE_COLOR)
+                .style("stroke-width", STROKE_WIDTH)
+                .call(Nodes.getDragBehaviour(tiles, links))
+            .transition(500)
+                .attr("r", SIZE_NODE);
 
         nodes
             .attr("cx", function (n) {
@@ -101,6 +81,73 @@ var Nodes = {
             });
 
         return nodes;
+    },
+    
+
+    getDragBehaviour : function(tiles, links) {
+        return d3.behavior.drag()
+        
+            .on("dragstart", function (n) {
+                d3.select(this)
+                        .transition()
+                        .duration(DRAG_ANMIATION_DURATION_MS)
+                            .attr("r", SIZE_NODE_DRAGGED)
+                            .style("fill", FILL_COLOR_DRAGGED)
+                            .style("stroke", STROKE_COLOR_DRAGGED)
+                            .style("stroke-width", STROKE_WIDTH_DRAGGED);
+
+                links.each(function (l) {
+                    if (l.source === n || l.target === n) {
+                        d3.select(this)
+                            .transition()
+                            .duration(DRAG_ANMIATION_DURATION_MS)
+                                .style("stroke", STROKE_COLOR_DRAGGED)
+                                .style("stroke-width", STROKE_WIDTH_DRAGGED);
+                    }
+                });
+            })
+        
+            .on("drag", function (n) {
+                var nearestTile = Nodes.getNearestAvailableTile(n, d3.event.x, d3.event.y, tiles);
+                
+                Nodes.moveNodeToTile(n, nearestTile);
+              
+                d3.select(this)
+                    .attr("cx", n.x)
+                    .attr("cy", n.y);
+                
+                links.each(function (l) {
+                    if (l.source === n) {
+                       d3.select(this)
+                           .attr("x1", n.x)
+                           .attr("y1", n.y);
+                    } else if (l.target === n) {
+                       d3.select(this)
+                           .attr("x2", n.x)
+                           .attr("y2", n.y);
+                    }
+                });
+            })
+        
+            .on("dragend", function (n) {
+                d3.select(this)
+                    .transition()
+                    .duration(DRAG_ANMIATION_DURATION_MS)
+                        .attr("r", SIZE_NODE)
+                        .style("fill", FILL_COLOR)
+                        .style("stroke", STROKE_COLOR)
+                        .style("stroke-width", STROKE_WIDTH);
+                
+                links.each(function (l) {
+                    if (l.source === n || l.target === n) {
+                       d3.select(this)
+                            .transition()
+                            .duration(DRAG_ANMIATION_DURATION_MS)
+                                .style("stroke", STROKE_COLOR)
+                                .style("stroke-width", STROKE_WIDTH);
+                    }
+                });
+            });
     },
     
     getNearestAvailableTile  : function (node, x, y, tiles) {
@@ -120,14 +167,6 @@ var Nodes = {
                 }
             }
         });
-        
-        // clean the previous tile of the node being dragged :
-        if (node.tile != null) {
-            node.tile.node = null;
-        }
-        // set the tile and node :
-        node.tile = nearestTile;
-        node.tile.node = node;
         
         return nearestTile;
     }

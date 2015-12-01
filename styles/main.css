@@ -8,28 +8,11 @@ body {
 }
 
 .tile circle {
-    stroke: #bfbfbf;
+    stroke: #c6c6c6;
     stroke-width: 1;
 }
 
 .tile line {
-    stroke: #dedede;
+    stroke: #c6c6c6;
     stroke-width: 1;
-}
-
-.node {
-    fill: #5a5a5a;
-    stroke: #343434;
-    stroke-width: 2;
-}
-
-.draggedNode {
-    fill: #ff0000;
-    stroke: #980000;
-    stroke-width: 2;
-}
-
-.link {
-    stroke: #bf0000;
-    stroke-width: 2;
 }

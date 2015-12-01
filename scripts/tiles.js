@@ -75,6 +75,18 @@ var Tiles = {
         
         return result;
     },
+    
+    getRandomEmptyTile : function(dataTiles) {
+        var randomRow = getRandomInt(0, dataTiles.nbRow - 1),
+            randomCol = getRandomInt(0, dataTiles.nbCol - 1 - (randomRow % 2 === 0 ? 0 : 1)),
+            randomTile = Tiles.getTileAt(dataTiles.data, randomRow, randomCol);
+        
+        if (randomTile.node == null) {
+            return randomTile;
+        } else {
+            return this.getRandomEmptyTile(dataTiles);
+        }
+    },
 
     renderTiles : function (svg, data) {
         var tiles = svg.selectAll("tile").data(data.tiles);

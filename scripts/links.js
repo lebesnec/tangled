@@ -77,7 +77,8 @@ var Links = {
 
         links.enter()
             .append("line")
-                .attr("class", "link");
+                .style("stroke", STROKE_COLOR)
+                .style("stroke-width", STROKE_WIDTH);
 
         links
             .attr("x1", function (l) {

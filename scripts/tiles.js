@@ -89,7 +89,7 @@ var Tiles = {
     },
 
     renderTiles : function (svg, data) {
-        var tiles = svg.selectAll("tile").data(data.tiles);
+        var tiles = svg.selectAll("tile").data(data.tiles.data);
 
         tiles.exit()
             .remove();

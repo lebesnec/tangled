@@ -1,6 +1,6 @@
 var NB_TILES_PER_ROW = 25,
-    NB_NODES = 100,
-    LINKS_DENSITY = 1,
+    NB_NODES = 10,//100
+    LINKS_DENSITY = 2,//1
     // Style :
     SIZE_NODE = 20,
     SIZE_NODE_DRAGGED = 25,
@@ -10,7 +10,10 @@ var NB_TILES_PER_ROW = 25,
     STROKE_COLOR_DRAGGED = '#3e6bff',
     STROKE_WIDTH = 2,
     STROKE_WIDTH_DRAGGED = 3,
-    DRAG_ANMIATION_DURATION_MS = 500;
+    // Animation duration :
+    APPEAR_ANIMATION_DURATION_MS = 1500,
+    DRAG_START_END_ANIMATION_DURATION_MS = 300,
+    DRAG_ANIMATION_DURATION_MS = 100;
 
 /**
  * http://stackoverflow.com/questions/1527803/generating-random-numbers-in-javascript-in-a-specific-range
@@ -44,11 +47,11 @@ var Twisted = {
         var dataTiles = Tiles.getDataTiles(this.width, this.height),
             dataNodes = Nodes.getDataNodes(dataTiles),
             dataLinks = Links.getDataLinks(dataTiles, dataNodes);
-        
-        Nodes.shuffle(dataNodes, dataTiles)
 
+        Nodes.shuffle(dataNodes, dataTiles);
+        
         this.data = {
-            tiles : dataTiles.data,
+            tiles : dataTiles,
             nodes : dataNodes,
             links : dataLinks
         };

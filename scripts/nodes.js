@@ -18,6 +18,8 @@ var Nodes = {
                         id : "node_" + i + "_" + j,
                         x : tile.x,
                         y : tile.y,
+                        startX : tile.x,
+                        startY : tile.y,
                         tile : tile,
                         linksCount : 0
                     };
@@ -63,22 +65,34 @@ var Nodes = {
 
         nodes.enter()
             .append("circle")
-                .attr("r", 0)
+                .attr("r", SIZE_NODE)
+                .attr("cx", function (n) {
+                    return n.startX;
+                })
+                .attr("cy", function (n) {
+                    return n.startY;
+                })
                 .attr("class", "node")
                 .style("fill", FILL_COLOR)
                 .style("stroke", STROKE_COLOR)
                 .style("stroke-width", STROKE_WIDTH)
                 .call(Nodes.getDragBehaviour(tiles, links))
-            .transition(500)
-                .attr("r", SIZE_NODE);
+            .transition()
+            .duration(APPEAR_ANIMATION_DURATION_MS)
+                .attr("cx", function (n) {
+                    return n.x;
+                })
+                .attr("cy", function (n) {
+                    return n.y;
+                });
 
-        nodes
+       /*TODO nodes
             .attr("cx", function (n) {
                 return n.x;
             })
             .attr("cy", function (n) {
                 return n.y;
-            });
+            });*/
 
         return nodes;
     },
@@ -89,18 +103,18 @@ var Nodes = {
         
             .on("dragstart", function (n) {
                 d3.select(this)
-                        .transition()
-                        .duration(DRAG_ANMIATION_DURATION_MS)
-                            .attr("r", SIZE_NODE_DRAGGED)
-                            .style("fill", FILL_COLOR_DRAGGED)
-                            .style("stroke", STROKE_COLOR_DRAGGED)
-                            .style("stroke-width", STROKE_WIDTH_DRAGGED);
+                    .transition('dragstartend')
+                    .duration(DRAG_START_END_ANIMATION_DURATION_MS)
+                        .attr("r", SIZE_NODE_DRAGGED)
+                        .style("fill", FILL_COLOR_DRAGGED)
+                        .style("stroke", STROKE_COLOR_DRAGGED)
+                        .style("stroke-width", STROKE_WIDTH_DRAGGED);
 
                 links.each(function (l) {
                     if (l.source === n || l.target === n) {
                         d3.select(this)
-                            .transition()
-                            .duration(DRAG_ANMIATION_DURATION_MS)
+                            .transition('dragstartend')
+                            .duration(DRAG_START_END_ANIMATION_DURATION_MS)
                                 .style("stroke", STROKE_COLOR_DRAGGED)
                                 .style("stroke-width", STROKE_WIDTH_DRAGGED);
                     }
@@ -113,26 +127,35 @@ var Nodes = {
                 Nodes.moveNodeToTile(n, nearestTile);
               
                 d3.select(this)
-                    .attr("cx", n.x)
-                    .attr("cy", n.y);
+                    .transition('drag')
+                    .ease('linear')
+                    .duration(DRAG_ANIMATION_DURATION_MS)
+                        .attr("cx", n.x)
+                        .attr("cy", n.y);
                 
                 links.each(function (l) {
                     if (l.source === n) {
-                       d3.select(this)
-                           .attr("x1", n.x)
-                           .attr("y1", n.y);
+                        d3.select(this)
+                            .transition('drag')
+                            .ease('linear')
+                            .duration(DRAG_ANIMATION_DURATION_MS)
+                                .attr("x1", n.x)
+                                .attr("y1", n.y);
                     } else if (l.target === n) {
-                       d3.select(this)
-                           .attr("x2", n.x)
-                           .attr("y2", n.y);
+                        d3.select(this)
+                            .transition('drag')
+                            .ease('linear')
+                            .duration(DRAG_ANIMATION_DURATION_MS)
+                                .attr("x2", n.x)
+                                .attr("y2", n.y);
                     }
                 });
             })
         
             .on("dragend", function (n) {
                 d3.select(this)
-                    .transition()
-                    .duration(DRAG_ANMIATION_DURATION_MS)
+                    .transition('dragstartend')
+                    .duration(DRAG_START_END_ANIMATION_DURATION_MS)
                         .attr("r", SIZE_NODE)
                         .style("fill", FILL_COLOR)
                         .style("stroke", STROKE_COLOR)
@@ -141,8 +164,8 @@ var Nodes = {
                 links.each(function (l) {
                     if (l.source === n || l.target === n) {
                        d3.select(this)
-                            .transition()
-                            .duration(DRAG_ANMIATION_DURATION_MS)
+                            .transition('dragstartend')
+                            .duration(DRAG_START_END_ANIMATION_DURATION_MS)
                                 .style("stroke", STROKE_COLOR)
                                 .style("stroke-width", STROKE_WIDTH);
                     }

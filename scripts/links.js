@@ -78,9 +78,35 @@ var Links = {
         links.enter()
             .append("line")
                 .style("stroke", STROKE_COLOR)
-                .style("stroke-width", STROKE_WIDTH);
+                .style("stroke-width", STROKE_WIDTH)
+                .attr("x1", function (l) {
+                    return l.source.startX;
+                })
+                .attr("y1", function (l) {
+                    return l.source.startY;
+                })
+                .attr("x2", function (l) {
+                    return l.target.startX;
+                })
+                .attr("y2", function (l) {
+                    return l.target.startY;
+                })
+            .transition()
+            .duration(APPEAR_ANIMATION_DURATION_MS)
+                .attr("x1", function (l) {
+                    return l.source.x;
+                })
+                .attr("y1", function (l) {
+                    return l.source.y;
+                })
+                .attr("x2", function (l) {
+                    return l.target.x;
+                })
+                .attr("y2", function (l) {
+                    return l.target.y;
+                });
 
-        links
+       /*TODO links
             .attr("x1", function (l) {
                 return l.source.x;
             })
@@ -92,7 +118,7 @@ var Links = {
             })
             .attr("y2", function (l) {
                 return l.target.y;
-            });
+            });*/
 
         return links;
     }

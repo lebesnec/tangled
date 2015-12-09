@@ -8,6 +8,7 @@ var NB_TILES_PER_ROW = 25,
     FILL_COLOR_DRAGGED = '#567dff',
     STROKE_COLOR = '#343434',    
     STROKE_COLOR_DRAGGED = '#3e6bff',
+    STROKE_COLOR_INTERSECT = '#ff3e3e',
     STROKE_WIDTH = 2,
     STROKE_WIDTH_DRAGGED = 3,
     // Animation duration :
@@ -41,6 +42,7 @@ var Twisted = {
 
         this.initData();
         this.renderData();
+        Links.checkIntersections(this.render.links);
     },
 
     initData : function () {

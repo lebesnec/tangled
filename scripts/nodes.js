@@ -86,14 +86,6 @@ var Nodes = {
                     return n.y;
                 });
 
-       /*TODO nodes
-            .attr("cx", function (n) {
-                return n.x;
-            })
-            .attr("cy", function (n) {
-                return n.y;
-            });*/
-
         return nodes;
     },
     
@@ -150,6 +142,8 @@ var Nodes = {
                                 .attr("y2", n.y);
                     }
                 });
+            
+                Links.checkIntersections(links);
             })
         
             .on("dragend", function (n) {
@@ -163,10 +157,11 @@ var Nodes = {
                 
                 links.each(function (l) {
                     if (l.source === n || l.target === n) {
-                       d3.select(this)
+                        var strokeColor = (l.intersect ? STROKE_COLOR_INTERSECT : STROKE_COLOR);
+                        d3.select(this)
                             .transition('dragstartend')
                             .duration(DRAG_START_END_ANIMATION_DURATION_MS)
-                                .style("stroke", STROKE_COLOR)
+                                .style("stroke", strokeColor)
                                 .style("stroke-width", STROKE_WIDTH);
                     }
                 });

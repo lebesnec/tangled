@@ -68,6 +68,40 @@ var Links = {
         
         return link;
     },
+    
+    checkIntersections : function(links) {
+        links.each(function (link1) {
+            link1.intersect = false;
+            links.each(function (link2) {
+                if (link1 != link2) {
+                    if (Links.intersect(link1.source, link1.target, link2.source, link2.target)) {
+                        link1.intersect = true;
+                        //TODO break;
+                    }
+                } 
+            });
+            var strokeColor = (link1.intersect ? STROKE_COLOR_INTERSECT : STROKE_COLOR);
+            d3.select(this).style("stroke", strokeColor);
+        });
+    },
+    
+    /**
+     * http://stackoverflow.com/a/1968345
+     */
+    intersect : function(p0, p1, p2, p3) {
+        if (p0 == p2 || p0 == p3 || p1 == p2 || p1 == p3) {
+            return false;
+        }
+        
+        var s1_x = p1.x - p0.x,
+            s1_y = p1.y - p0.y,
+            s2_x = p3.x - p2.x,
+            s2_y = p3.y - p2.y,
+            s = (-s1_y * (p0.x - p2.x) + s1_x * (p0.y - p2.y)) / (-s2_x * s1_y + s1_x * s2_y),
+            t = ( s2_x * (p0.y - p2.y) - s2_y * (p0.x - p2.x)) / (-s2_x * s1_y + s1_x * s2_y);
+
+        return (s >= 0 && s <= 1 && t >= 0 && t <= 1);  
+    },
 
     renderLinks : function (svg, data) {
         var links = svg.selectAll("link").data(data.links);
@@ -105,20 +139,6 @@ var Links = {
                 .attr("y2", function (l) {
                     return l.target.y;
                 });
-
-       /*TODO links
-            .attr("x1", function (l) {
-                return l.source.x;
-            })
-            .attr("y1", function (l) {
-                return l.source.y;
-            })
-            .attr("x2", function (l) {
-                return l.target.x;
-            })
-            .attr("y2", function (l) {
-                return l.target.y;
-            });*/
 
         return links;
     }

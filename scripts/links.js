@@ -59,7 +59,9 @@ var Links = {
             link = {
                 id : "links_" + sourceTile.row + "_" + sourceTile.col + "_" + targetTile.row + "_" + targetTile.col,
                 target : targetTile.node,
-                source : sourceTile.node
+                source : sourceTile.node,
+                intersect : false,
+                drag : false
             };
             
             targetTile.node.linksCount ++;
@@ -70,19 +72,36 @@ var Links = {
     },
     
     checkIntersections : function(links) {
+        var result = true;
+        
         links.each(function (link1) {
             link1.intersect = false;
             links.each(function (link2) {
                 if (link1 != link2) {
                     if (Links.intersect(link1.source, link1.target, link2.source, link2.target)) {
                         link1.intersect = true;
+                        result = false;
                         //TODO break;
                     }
                 } 
             });
-            var strokeColor = (link1.intersect ? STROKE_COLOR_INTERSECT : STROKE_COLOR);
-            d3.select(this).style("stroke", strokeColor);
+
+            if (link1.intersect) {
+                if (link1.drag) {
+                    d3.select(this).style("stroke", STROKE_COLOR_DRAGGED_INTERSECT);
+                } else {
+                    d3.select(this).style("stroke", STROKE_COLOR_INTERSECT);
+                }
+            } else {
+                if (link1.drag) {
+                    d3.select(this).style("stroke", STROKE_COLOR_DRAGGED);
+                } else {
+                    d3.select(this).style("stroke", STROKE_COLOR);
+                }
+            }           
         });
+        
+        return result;
     },
     
     /**

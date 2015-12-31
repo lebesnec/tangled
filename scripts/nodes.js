@@ -104,10 +104,14 @@ var Nodes = {
 
                 links.each(function (l) {
                     if (l.source === n || l.target === n) {
+                        var strokeColor = STROKE_COLOR_DRAGGED;
+                        if (l.intersect) {
+                            strokeColor = STROKE_COLOR_DRAGGED_INTERSECT;
+                        }
                         d3.select(this)
                             .transition('dragstartend')
                             .duration(DRAG_START_END_ANIMATION_DURATION_MS)
-                                .style("stroke", STROKE_COLOR_DRAGGED)
+                                .style("stroke", strokeColor)
                                 .style("stroke-width", STROKE_WIDTH_DRAGGED);
                     }
                 });
@@ -127,6 +131,7 @@ var Nodes = {
                 
                 links.each(function (l) {
                     if (l.source === n) {
+                        l.drag = true;
                         d3.select(this)
                             .transition('drag')
                             .ease('linear')
@@ -134,6 +139,7 @@ var Nodes = {
                                 .attr("x1", n.x)
                                 .attr("y1", n.y);
                     } else if (l.target === n) {
+                        l.drag = true;
                         d3.select(this)
                             .transition('drag')
                             .ease('linear')
@@ -147,6 +153,8 @@ var Nodes = {
             })
         
             .on("dragend", function (n) {
+                var win = Links.checkIntersections(links);
+            
                 d3.select(this)
                     .transition('dragstartend')
                     .duration(DRAG_START_END_ANIMATION_DURATION_MS)
@@ -156,6 +164,7 @@ var Nodes = {
                         .style("stroke-width", STROKE_WIDTH);
                 
                 links.each(function (l) {
+                    l.drag = false;
                     if (l.source === n || l.target === n) {
                         var strokeColor = (l.intersect ? STROKE_COLOR_INTERSECT : STROKE_COLOR);
                         d3.select(this)
@@ -165,6 +174,10 @@ var Nodes = {
                                 .style("stroke-width", STROKE_WIDTH);
                     }
                 });
+            
+                if (win) {
+                    Twisted.displayWin();
+                }
             });
     },
     

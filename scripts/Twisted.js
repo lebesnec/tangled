@@ -9,6 +9,7 @@ var NB_TILES_PER_ROW = 25,
     STROKE_COLOR = '#343434',    
     STROKE_COLOR_DRAGGED = '#3e6bff',
     STROKE_COLOR_INTERSECT = '#ff3e3e',
+    STROKE_COLOR_DRAGGED_INTERSECT = '#b100d1',
     STROKE_WIDTH = 2,
     STROKE_WIDTH_DRAGGED = 3,
     // Animation duration :
@@ -69,6 +70,10 @@ var Twisted = {
             links : d3Links,
             nodes : d3Nodes
         };
+    },
+    
+    displayWin : function() {
+        console.log('win !');
     }
 
 };

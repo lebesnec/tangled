@@ -153,7 +153,7 @@ var Nodes = {
             })
         
             .on("dragend", function (n) {
-                var win = Links.checkIntersections(links);
+                var victory = Links.checkIntersections(links);
             
                 d3.select(this)
                     .transition('dragstartend')
@@ -175,8 +175,8 @@ var Nodes = {
                     }
                 });
             
-                if (win) {
-                    Twisted.displayWin();
+                if (victory) {
+                    Twisted.displayVictory();
                 }
             });
     },

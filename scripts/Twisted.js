@@ -72,8 +72,8 @@ var Twisted = {
         };
     },
     
-    displayWin : function() {
-        console.log('win !');
+    displayVictory : function() {
+        $('#victoryModal').modal();
     }
 
 };

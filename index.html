@@ -1,26 +1,49 @@
 <!doctype html>
-<html lang="">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Twisted</title>
-
-    <link rel="stylesheet" href="styles/main.css">
-</head>
-
-<body id="d3">
-    <script src="scripts/libraries/d3.js"></script>
-    <script src="scripts/Tiles.js"></script>
-    <script src="scripts/Nodes.js"></script>
-    <script src="scripts/Links.js"></script>
-    <script src="scripts/Twisted.js"></script>
+<html lang="en">
     
-    <script type="text/javascript">
-        Twisted.start();
-    </script>
-</body>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <title>Twisted</title>
+
+        <link rel="stylesheet" href="libraries/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="styles/main.css">
+    </head>
+
+    <body id="d3">
+        <script src="libraries/jquery/jquery-2.1.4.min.js"></script>
+        <script src="libraries/bootstrap/js/bootstrap.min.js"></script>
+        <script src="libraries/d3/d3.min.js"></script>
+
+        <script src="scripts/Tiles.js"></script>
+        <script src="scripts/Nodes.js"></script>
+        <script src="scripts/Links.js"></script>
+        <script src="scripts/Twisted.js"></script>
+
+        <script type="text/javascript">
+            Twisted.start();
+        </script>
+        
+        <!-- Victory modal -->
+        <div id="victoryModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>One fine body&hellip;</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    
 </html> 

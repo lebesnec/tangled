@@ -175,6 +175,8 @@ var Nodes = {
                     }
                 });
             
+                Twisted.nbMove ++;
+            
                 if (victory) {
                     Twisted.displayVictory();
                 }

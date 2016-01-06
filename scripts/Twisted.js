@@ -1,5 +1,5 @@
 var NB_TILES_PER_ROW = 25,
-    NB_NODES = 10,//100
+    NB_NODES = 5,//100
     LINKS_DENSITY = 2,//1
     // Style :
     SIZE_NODE = 20,
@@ -30,7 +30,9 @@ var Twisted = {
     height : null,
     svg : null,
     data : null,
-    render : null,
+    render : null,    
+    startDate : null,
+    nbMove : 0,
 
     start : function () {
         this.width = window.innerWidth;
@@ -58,6 +60,9 @@ var Twisted = {
             nodes : dataNodes,
             links : dataLinks
         };
+        
+        this.startDate = new Date();
+        this.nbMove = 0;
     },
 
     renderData : function (svg) {
@@ -73,7 +78,17 @@ var Twisted = {
     },
     
     displayVictory : function() {
-        $('#victoryModal').modal();
+        var now = new Date(),
+            minutes = Math.round((((now.getTime() - this.startDate.getTime()) % 86400000) % 3600000) / 60000),
+            timeText = (minutes <= 1 ? 'less than a minute' : (minutes + ' minutes')),
+            movetext = (this.nbMove + ' move' + (this.nbMove > 1 ? 's' : ''));
+        
+        $('#victoryText').html('in ' + timeText + '<br/> and ' + movetext);
+        
+        $('#victoryModal').modal({
+            backdrop : 'static',
+            keyboard : false
+        });
     }
 
 };

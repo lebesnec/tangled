@@ -16,3 +16,31 @@ body {
     stroke: #c6c6c6;
     stroke-width: 1;
 }
+
+/* http://codepen.io/dimbslmh/full/mKfCc */
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+#victoryModal .modal-dialog {
+    text-align: center;
+}
+
+#victoryModal .glyphicon {
+    font-size: 2em;
+}

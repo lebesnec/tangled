@@ -2,8 +2,8 @@ var Nodes = {
 
     getDataNodes : function (dataTiles) {
         var me = this,
-            nbNodesRow = Math.ceil(Math.sqrt((NB_NODES * dataTiles.nbCol) / dataTiles.nbRow)),
-            nbNodesCol = Math.ceil(NB_NODES / nbNodesRow),
+            nbNodesRow = Math.ceil(Math.sqrt((Twisted.nbNodes * dataTiles.nbCol) / dataTiles.nbRow)),
+            nbNodesCol = Math.ceil(Twisted.nbNodes / nbNodesRow),
             deltaRow = Math.ceil((dataTiles.nbRow - nbNodesCol) / 2),
             deltaCol = Math.ceil((dataTiles.nbCol - nbNodesRow) / 2),
             nb = 0,
@@ -11,7 +11,7 @@ var Nodes = {
         
         for (var i = 0; i < nbNodesCol; i++) {
             for (var j = 0; j < nbNodesRow; j++) {
-                if (nb < NB_NODES) {
+                if (nb < Twisted.nbNodes) {
                     nb++;
                     var tile = Tiles.getTileAt(dataTiles.data, i + deltaRow, j + deltaCol);
                     var node = {
@@ -178,7 +178,7 @@ var Nodes = {
                 Twisted.nbMove ++;
             
                 if (victory) {
-                    Twisted.displayVictory();
+                    Twisted.displayVictoryModal();
                 }
             });
     },

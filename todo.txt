@@ -1,1 +1,8 @@
 links on top http://stackoverflow.com/questions/14167863/how-can-i-bring-a-circle-to-the-front-with-d3?lq=1
+
+save max score
+background on start modal
+size of nodes and tiles
+logo on start modal title
+text on modal (payment)
+mobile

@@ -17,6 +17,24 @@ body {
     stroke-width: 1;
 }
 
+#startModal .modal-dialog {
+    text-align: center;
+}
+
+#startModal button {
+    width: 240px;
+    text-align: right;
+}
+
+
+#victoryModal .modal-dialog {
+    text-align: center;
+}
+
+#victoryModal .glyphicon {
+    font-size: 2em;
+}
+
 /* http://codepen.io/dimbslmh/full/mKfCc */
 .modal {
   text-align: center;
@@ -35,12 +53,4 @@ body {
   display: inline-block;
   text-align: left;
   vertical-align: middle;
-}
-
-#victoryModal .modal-dialog {
-    text-align: center;
-}
-
-#victoryModal .glyphicon {
-    font-size: 2em;
 }

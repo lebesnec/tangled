@@ -1,6 +1,4 @@
 var NB_TILES_PER_ROW = 25,
-    NB_NODES = 5,//100
-    LINKS_DENSITY = 2,//1
     // Style :
     SIZE_NODE = 20,
     SIZE_NODE_DRAGGED = 25,
@@ -33,16 +31,67 @@ var Twisted = {
     render : null,    
     startDate : null,
     nbMove : 0,
-
-    start : function () {
+    nbNodes : 10,
+    linksDensity : 10,
+    difficulty : 1,
+    
+    start : function() {
         this.width = window.innerWidth;
         this.height = window.innerHeight;
+        
+        $('#start1Button').on('click', function () {
+            Twisted.initGame(1);
+        });
+        $('#start2Button').on('click', function () {
+            Twisted.initGame(2);
+        });
+        $('#start3Button').on('click', function () {
+            Twisted.initGame(3);
+        });
+        $('#start4Button').on('click', function () {
+            Twisted.initGame(4);
+        });
+        
+        $('#startNewGameButton').on('click', function () {
+            $('#victoryModal').modal('hide');
+            Twisted.startNewGame();
+        });
+        
+        this.startNewGame();
+    },
 
+    startNewGame : function () {
+        this.data = null;
+        
+        d3.select("svg").remove();
+        
         this.svg = d3.select("#d3")
             .append("svg")
                 .attr("width", this.width)
-                .attr("height", this.height);
-
+                .attr("height", this.height);        
+        
+        this.displayStartModal();
+    },
+    
+    initGame : function(difficulty) {
+        $('#startModal').modal('hide');
+        
+        this.difficulty = difficulty;
+        
+        if (difficulty == 1) {
+            this.nbNodes = 5;//10;
+            this.linksDensity = 15;
+        } else if (difficulty == 2) {
+            this.nbNodes = 5;//25;
+            this.linksDensity = 1;
+        } else if (difficulty == 3) {
+            this.nbNodes = 5;//40;
+            this.linksDensity = 1;
+        } else {
+            this.nbNodes = 5;//70;
+            this.linksDensity = 1;
+        }
+        
         this.initData();
         this.renderData();
         Links.checkIntersections(this.render.links);
@@ -77,11 +126,23 @@ var Twisted = {
         };
     },
     
-    displayVictory : function() {
+    displayStartModal : function() {
+         $('#startModal').modal({
+            backdrop : 'static',
+            keyboard : false
+        });
+    },
+    
+    displayVictoryModal : function() {
         var now = new Date(),
             minutes = Math.round((((now.getTime() - this.startDate.getTime()) % 86400000) % 3600000) / 60000),
             timeText = (minutes <= 1 ? 'less than a minute' : (minutes + ' minutes')),
             movetext = (this.nbMove + ' move' + (this.nbMove > 1 ? 's' : ''));
+        
+        $('#victoryModal .glyphicon-star').hide();
+        for (var i = 1; i <= this.difficulty; i++) {
+            $('#victory' + i + 'Icon').show();
+        }
         
         $('#victoryText').html('in ' + timeText + '<br/> and ' + movetext);
         

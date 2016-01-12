@@ -16,6 +16,7 @@ var Nodes = {
                     var tile = Tiles.getTileAt(dataTiles.data, i + deltaRow, j + deltaCol);
                     var node = {
                         id : "node_" + i + "_" + j,
+                        width : 90 * (dataTiles.widthTile / 2) / 100,
                         x : tile.x,
                         y : tile.y,
                         startX : tile.x,
@@ -53,11 +54,11 @@ var Nodes = {
         node.y = tile.y;
     },
 
-    renderNodes : function (svg, data, tiles, links) {
+    renderNodes : function (svg, data) {
         var nodes = svg.selectAll("node").data(data.nodes, function (n) {
             return n.id;
         });
-
+        
         nodes.exit()
             .transition()
                 .attr("r", 0)
@@ -65,7 +66,9 @@ var Nodes = {
 
         nodes.enter()
             .append("circle")
-                .attr("r", SIZE_NODE)
+                .attr("r", function (n) {
+                    return n.width;
+                })
                 .attr("cx", function (n) {
                     return n.startX;
                 })
@@ -73,10 +76,10 @@ var Nodes = {
                     return n.startY;
                 })
                 .attr("class", "node")
-                .style("fill", FILL_COLOR)
-                .style("stroke", STROKE_COLOR)
-                .style("stroke-width", STROKE_WIDTH)
-                .call(Nodes.getDragBehaviour(tiles, links))
+                .style("fill", NODE_FILL_COLOR)
+                .style("stroke", NODE_STROKE_COLOR)
+                .style("stroke-width", 1)
+                .call(Nodes.getDragBehaviour())
             .transition()
             .duration(APPEAR_ANIMATION_DURATION_MS)
                 .attr("cx", function (n) {
@@ -90,19 +93,17 @@ var Nodes = {
     },
     
 
-    getDragBehaviour : function(tiles, links) {
+    getDragBehaviour : function() {
         return d3.behavior.drag()
         
             .on("dragstart", function (n) {
                 d3.select(this)
                     .transition('dragstartend')
                     .duration(DRAG_START_END_ANIMATION_DURATION_MS)
-                        .attr("r", SIZE_NODE_DRAGGED)
-                        .style("fill", FILL_COLOR_DRAGGED)
-                        .style("stroke", STROKE_COLOR_DRAGGED)
-                        .style("stroke-width", STROKE_WIDTH_DRAGGED);
+                        .style("fill", NODE_FILL_COLOR_DRAGGED)
+                        .style("stroke", NODE_STROKE_COLOR_DRAGGED);
 
-                links.each(function (l) {
+                Twisted.render.links.each(function (l) {
                     if (l.source === n || l.target === n) {
                         var strokeColor = STROKE_COLOR_DRAGGED;
                         if (l.intersect) {
@@ -118,7 +119,7 @@ var Nodes = {
             })
         
             .on("drag", function (n) {
-                var nearestTile = Nodes.getNearestAvailableTile(n, d3.event.x, d3.event.y, tiles);
+                var nearestTile = Nodes.getNearestAvailableTile(n, d3.event.x, d3.event.y, Twisted.render.tiles);
                 
                 Nodes.moveNodeToTile(n, nearestTile);
               
@@ -129,7 +130,7 @@ var Nodes = {
                         .attr("cx", n.x)
                         .attr("cy", n.y);
                 
-                links.each(function (l) {
+                Twisted.render.links.each(function (l) {
                     if (l.source === n) {
                         l.drag = true;
                         d3.select(this)
@@ -149,21 +150,19 @@ var Nodes = {
                     }
                 });
             
-                Links.checkIntersections(links);
+                Links.checkIntersections(Twisted.render.links);
             })
         
             .on("dragend", function (n) {
-                var victory = Links.checkIntersections(links);
+                var victory = Links.checkIntersections(Twisted.render.links);
             
                 d3.select(this)
                     .transition('dragstartend')
                     .duration(DRAG_START_END_ANIMATION_DURATION_MS)
-                        .attr("r", SIZE_NODE)
-                        .style("fill", FILL_COLOR)
-                        .style("stroke", STROKE_COLOR)
-                        .style("stroke-width", STROKE_WIDTH);
+                        .style("fill", NODE_FILL_COLOR)
+                        .style("stroke", NODE_STROKE_COLOR);
                 
-                links.each(function (l) {
+                Twisted.render.links.each(function (l) {
                     l.drag = false;
                     if (l.source === n || l.target === n) {
                         var strokeColor = (l.intersect ? STROKE_COLOR_INTERSECT : STROKE_COLOR);

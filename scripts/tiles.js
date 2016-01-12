@@ -43,7 +43,8 @@ var Tiles = {
         return {
             data : data,
             nbCol : NB_TILES_PER_ROW,
-            nbRow : row
+            nbRow : row,
+            widthTile : widthTile
         };
     },
     

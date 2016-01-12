@@ -1,9 +1,10 @@
 var NB_TILES_PER_ROW = 25,
-    // Style :
-    SIZE_NODE = 20,
-    SIZE_NODE_DRAGGED = 25,
-    FILL_COLOR = '#575757',
-    FILL_COLOR_DRAGGED = '#567dff',
+    // Styles nodes :
+    NODE_FILL_COLOR = '#e8e8e8',
+    NODE_FILL_COLOR_DRAGGED = '#d9d9d9',
+    NODE_STROKE_COLOR = '#bfbfbf',    
+    NODE_STROKE_COLOR_DRAGGED = '#b4b4b4',
+    // Styles lines :
     STROKE_COLOR = '#343434',    
     STROKE_COLOR_DRAGGED = '#3e6bff',
     STROKE_COLOR_INTERSECT = '#ff3e3e',
@@ -61,16 +62,27 @@ var Twisted = {
     },
 
     startNewGame : function () {
-        this.data = null;
+        this.data = null;        
         
-        d3.select("svg").remove();
-        
-        this.svg = d3.select("#d3")
-            .append("svg")
-                .attr("width", this.width)
-                .attr("height", this.height);        
-        
+        this.drawStartBackground()        
         this.displayStartModal();
+    },
+    
+    drawStartBackground : function() {        
+        var dataTiles = Tiles.getDataTiles(this.width, this.height);
+       
+        this.nbNodes = ((dataTiles.nbCol - 4) * (dataTiles.nbRow - 2));
+        this.linksDensity = 1;
+        
+        var dataNodes = Nodes.getDataNodes(dataTiles),
+            dataLinks = Links.getDataLinks(dataTiles, dataNodes);
+        
+        this.data = {
+            tiles : dataTiles,
+            nodes : dataNodes,
+            links : dataLinks
+        };
+        this.renderData();
     },
     
     initGame : function(difficulty) {
@@ -79,16 +91,16 @@ var Twisted = {
         this.difficulty = difficulty;
         
         if (difficulty == 1) {
-            this.nbNodes = 5;//10;
+            this.nbNodes = 5;//TODO 10;
             this.linksDensity = 15;
         } else if (difficulty == 2) {
-            this.nbNodes = 5;//25;
+            this.nbNodes = 25;
             this.linksDensity = 1;
         } else if (difficulty == 3) {
-            this.nbNodes = 5;//40;
+            this.nbNodes = 40;
             this.linksDensity = 1;
         } else {
-            this.nbNodes = 5;//70;
+            this.nbNodes = 70;
             this.linksDensity = 1;
         }
         
@@ -115,15 +127,26 @@ var Twisted = {
     },
 
     renderData : function (svg) {
+        this.resetSVG();
+        
         var d3Tiles = Tiles.renderTiles(this.svg, this.data),
-            d3Links = Links.renderLinks(this.svg, this.data),
-            d3Nodes = Nodes.renderNodes(this.svg, this.data, d3Tiles, d3Links);
+            d3Nodes = Nodes.renderNodes(this.svg, this.data),
+            d3Links = Links.renderLinks(this.svg, this.data);
 
         this.render = {
             tiles : d3Tiles,
             links : d3Links,
             nodes : d3Nodes
         };
+    },
+    
+    resetSVG : function() {
+        d3.select("svg").remove();
+        
+        this.svg = d3.select("#d3")
+            .append("svg")
+                .attr("width", this.width)
+                .attr("height", this.height);
     },
     
     displayStartModal : function() {

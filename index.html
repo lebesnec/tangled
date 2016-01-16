@@ -28,35 +28,63 @@
             });
         </script>
         
-         <!-- Start modal -->
+        <!-- Start modal -->
         <div id="startModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">
-                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                            <b>Twisted</b>
-                        </h4>
+                        <h1 class="modal-title">Twisted</h1>
+                    </div>
+                    <div class="modal-body support-text">
+                        <p>This game is free but the developer accepts your support by letting you send what you think is fair (beer, gadget, snack, gold bar  ...) to this address :</p>
+                        <mark class="center-block">
+                            Christophe Le Besnerais<br>
+                            10C rue Ampère<br>
+                            38000 Grenoble<br>
+                            FRANCE<br>                       
+                        </mark>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="startGameButton" type="button" class="btn btn-lg btn-primary btn-block">Play</button>
+                        <br/>
+                        <div class="btn-group btn-group-lg btn-group-justified" role="group" aria-label="...">
+                            <a class="btn btn-info twitter" target="_blank" href="https://twitter.com/christophe_lb" role="button">
+                                <img src="images/twitter.png"/>
+                            </a>
+                            <a class="btn btn-info mail" target="_blank" href="mailto:christophe.androidmarket@gmail.com?Subject=Hello" role="button">
+                                <img src="images/mail.png"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+         <!-- Difficulty modal -->
+        <div id="difficultyModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title">Difficulty</h1>
                     </div>
                     <div class="modal-body">
-                        <p>bla</p>
                         <div class="btn-group-vertical btn-group-lg" role="group" aria-label="...">
-                            <button id="start1Button" type="button" class="btn btn-success">
+                            <button id="difficulty1Button" type="button" class="btn btn-success">
                                 <span class="glyphicon glyphicon-star pull-left" aria-hidden="true"></span>
                                 Easy
                             </button>
-                            <button id="start2Button" type="button" class="btn btn-primary">
+                            <button id="difficulty2Button" type="button" class="btn btn-primary">
                                 <span class="glyphicon glyphicon-star pull-left" aria-hidden="true"></span>
                                 <span class="glyphicon glyphicon-star pull-left" aria-hidden="true"></span>
                                 Difficult
                             </button>
-                            <button id="start3Button" type="button" class="btn btn-warning">
+                            <button id="difficulty3Button" type="button" class="btn btn-warning">
                                 <span class="glyphicon glyphicon-star pull-left" aria-hidden="true"></span>
                                 <span class="glyphicon glyphicon-star pull-left" aria-hidden="true"></span>
                                 <span class="glyphicon glyphicon-star pull-left" aria-hidden="true"></span>
                                 Hard
                             </button>
-                            <button id="start4Button" type="button" class="btn btn-danger">
+                            <button id="difficulty4Button" type="button" class="btn btn-danger">
                                 <span class="glyphicon glyphicon-star pull-left" aria-hidden="true"></span>
                                 <span class="glyphicon glyphicon-star pull-left" aria-hidden="true"></span>
                                 <span class="glyphicon glyphicon-star pull-left" aria-hidden="true"></span>
@@ -65,9 +93,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        footer
-                    </div>
+                    <div class="modal-footer"></div>
                 </div>
             </div>
         </div>
@@ -81,13 +107,13 @@
                         <span id="victory2Icon" class="glyphicon glyphicon-star" aria-hidden="true"></span>
                         <span id="victory3Icon" class="glyphicon glyphicon-star" aria-hidden="true"></span>
                         <span id="victory4Icon" class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                        <h4 class="modal-title"><b>Victory !</b></h4>
+                        <h2 class="modal-title">Victory !</h2>
                     </div>
                     <div class="modal-body">
                         <p id='victoryText'></p>
                     </div>
                     <div class="modal-footer">
-                        <button id="startNewGameButton" type="button" class="btn btn-primary center-block">Start a new game</button>
+                        <button id="startNewGameButton" type="button" class="btn btn-lg btn-primary btn-block">Play again</button>
                     </div>
                 </div>
             </div>

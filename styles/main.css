@@ -1,6 +1,7 @@
 body {
     background: #fafafa;
     font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 18px;
     color: #333;
     margin: 0;
     padding: 0;
@@ -17,40 +18,42 @@ body {
     stroke-width: 1;
 }
 
-#startModal .modal-dialog {
-    text-align: center;
+.support-text {
+    font-size: 16px;
+    text-align: left;
 }
 
-#startModal button {
+#difficultyModal button {
     width: 240px;
     text-align: right;
-}
-
-
-#victoryModal .modal-dialog {
-    text-align: center;
 }
 
 #victoryModal .glyphicon {
     font-size: 2em;
 }
 
+.modal-backdrop {
+    background-color: black;
+    opacity: 0.0 !important;
+}
+
 /* http://codepen.io/dimbslmh/full/mKfCc */
 .modal {
-  text-align: center;
-  padding: 0!important;
+    text-align: center;
+    padding: 0!important;
 }
 
 .modal:before {
-  content: '';
-  display: inline-block;
-  height: 100%;
-  vertical-align: middle;
-  margin-right: -4px;
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
 }
 
 .modal-dialog {
-  display: inline-block;
-  text-align: left;
-  vertical-align: middle;
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+    text-align: center;
 }

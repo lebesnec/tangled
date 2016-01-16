@@ -40,16 +40,21 @@ var Twisted = {
         this.width = window.innerWidth;
         this.height = window.innerHeight;
         
-        $('#start1Button').on('click', function () {
+        $('#startGameButton').on('click', function () {
+            $('#startModal').modal('hide');
+            Twisted.startNewGame();
+        });
+        
+        $('#difficulty1Button').on('click', function () {
             Twisted.initGame(1);
         });
-        $('#start2Button').on('click', function () {
+        $('#difficulty2Button').on('click', function () {
             Twisted.initGame(2);
         });
-        $('#start3Button').on('click', function () {
+        $('#difficulty3Button').on('click', function () {
             Twisted.initGame(3);
         });
-        $('#start4Button').on('click', function () {
+        $('#difficulty4Button').on('click', function () {
             Twisted.initGame(4);
         });
         
@@ -58,14 +63,21 @@ var Twisted = {
             Twisted.startNewGame();
         });
         
-        this.startNewGame();
+        this.drawStartBackground();
+        
+        $('#startModal').modal({
+            backdrop : 'static',
+            keyboard : false
+        });
     },
 
     startNewGame : function () {
-        this.data = null;        
+        this.data = null;
         
-        this.drawStartBackground()        
-        this.displayStartModal();
+        $('#difficultyModal').modal({
+            backdrop : 'static',
+            keyboard : false
+        });
     },
     
     drawStartBackground : function() {        
@@ -86,7 +98,7 @@ var Twisted = {
     },
     
     initGame : function(difficulty) {
-        $('#startModal').modal('hide');
+        $('#difficultyModal').modal('hide');
         
         this.difficulty = difficulty;
         
@@ -149,17 +161,12 @@ var Twisted = {
                 .attr("height", this.height);
     },
     
-    displayStartModal : function() {
-         $('#startModal').modal({
-            backdrop : 'static',
-            keyboard : false
-        });
-    },
-    
     displayVictoryModal : function() {
         var now = new Date(),
-            minutes = Math.round((((now.getTime() - this.startDate.getTime()) % 86400000) % 3600000) / 60000),
-            timeText = (minutes <= 1 ? 'less than a minute' : (minutes + ' minutes')),
+            deltaSeconds = Math.floor((now.getTime() - this.startDate.getTime()) / 1000),
+            minutes = Math.floor(deltaSeconds / 60),
+            seconds = (deltaSeconds - (minutes * 60)),
+            timeText = (minutes <= 0 ? '' : (minutes + (minutes == 1 ? ' minute and ' : ' minutes and '))) + (seconds + (seconds <= 1 ? ' second' :  ' seconds')),
             movetext = (this.nbMove + ' move' + (this.nbMove > 1 ? 's' : ''));
         
         $('#victoryModal .glyphicon-star').hide();

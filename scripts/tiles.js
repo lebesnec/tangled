@@ -1,7 +1,14 @@
 var Tiles = {
     
     getDataTiles : function (width, height) {
-        var widthTile = (width / NB_TILES_PER_ROW),
+        // We solve the followinf equations :
+        // (nbRow * nbCol) - (nbRow / 2) = NB_TILES
+        // and
+        // nbRow / nbCol = height / width => big aproximation here since rows overlap, so nbRow will be an approximation 
+        // we will add tiles until the screen is filled anyway.
+        var nbRow = Math.ceil((0.5 + Math.sqrt((0.5 * 0.5) + (4 * (width / height) * NB_TILES))) / ((2 * width) / height)),
+            nbCol = Math.ceil((nbRow * width) / height),
+            widthTile = (width / nbCol),
             heightTile = ((widthTile * 2) / Math.sqrt(3)),
             sizeTile = (heightTile / 2),
             col = 0,
@@ -32,7 +39,7 @@ var Tiles = {
             data.push(tile);
             
             col++;
-            if (col >= ((row % 2 === 0) ? NB_TILES_PER_ROW : NB_TILES_PER_ROW - 1)) {
+            if (col >= ((row % 2 === 0) ? nbCol : nbCol - 1)) {
                 col = 0;
                 row = row + 1;
                 
@@ -42,7 +49,7 @@ var Tiles = {
 
         return {
             data : data,
-            nbCol : NB_TILES_PER_ROW,
+            nbCol : nbCol,
             nbRow : row,
             widthTile : widthTile
         };

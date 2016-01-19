@@ -1,4 +1,4 @@
-var NB_TILES_PER_ROW = 25,
+var NB_TILES = 300,
     // Styles nodes :
     NODE_FILL_COLOR = '#e8e8e8',
     NODE_FILL_COLOR_DRAGGED = '#d9d9d9',

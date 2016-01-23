@@ -23,7 +23,13 @@ body {
     text-align: left;
 }
 
-#difficultyModal button {
+#toolbar {
+    margin-bottom: 0px;
+    border-color: #fafafa;
+    background-color: #fafafa;
+}
+
+#difficultyModal .modal-body button {
     width: 240px;
     text-align: right;
 }

@@ -1,7 +1,7 @@
 var Tiles = {
     
     getDataTiles : function (width, height) {
-        // We solve the followinf equations :
+        // We solve the following equations :
         // (nbRow * nbCol) - (nbRow / 2) = NB_TILES
         // and
         // nbRow / nbCol = height / width => big aproximation here since rows overlap, so nbRow will be an approximation 
@@ -18,7 +18,7 @@ var Tiles = {
 
         while (!stop) {
             var x = (col * widthTile) + (row % 2 === 1 ? widthTile : (widthTile / 2)),
-                y = (row * heightTile * 3 / 4) + sizeTile;
+                y = height - ((row * heightTile * 3 / 4) + sizeTile);
 
             var tile = {
                 id : "tile_" + col + "_" + row,

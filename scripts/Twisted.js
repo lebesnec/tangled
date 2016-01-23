@@ -38,11 +38,21 @@ var Twisted = {
     
     start : function() {
         this.width = window.innerWidth;
-        this.height = window.innerHeight;
+        this.height = window.innerHeight - 57; // 57 = toolbar
         
         $('#startGameButton').on('click', function () {
             $('#startModal').modal('hide');
             Twisted.startNewGame();
+        });
+        
+        $('#quitGameButton').on('click', function () {
+            $('#cancelButton').show();
+            Twisted.startNewGame();
+        });
+        
+        $('#cancelButton').on('click', function () {
+            $('#cancelButton').hide();
+            $('#difficultyModal').modal('hide');
         });
         
         $('#difficulty1Button').on('click', function () {
@@ -63,12 +73,17 @@ var Twisted = {
             Twisted.startNewGame();
         });
         
+        
+        $('#cancelButton').hide();
+        
         this.drawStartBackground();
         
         $('#startModal').modal({
             backdrop : 'static',
             keyboard : false
         });
+        
+        setInterval($.proxy(Twisted.updateScore, Twisted), 1000);
     },
 
     startNewGame : function () {
@@ -161,25 +176,34 @@ var Twisted = {
                 .attr("height", this.height);
     },
     
-    displayVictoryModal : function() {
-        var now = new Date(),
-            deltaSeconds = Math.floor((now.getTime() - this.startDate.getTime()) / 1000),
-            minutes = Math.floor(deltaSeconds / 60),
-            seconds = (deltaSeconds - (minutes * 60)),
-            timeText = (minutes <= 0 ? '' : (minutes + (minutes == 1 ? ' minute and ' : ' minutes and '))) + (seconds + (seconds <= 1 ? ' second' :  ' seconds')),
-            movetext = (this.nbMove + ' move' + (this.nbMove > 1 ? 's' : ''));
-        
+    updateScore : function() {
+        if (this.startDate != null) {
+            var now = new Date(),
+                deltaSeconds = Math.floor((now.getTime() - this.startDate.getTime()) / 1000),
+                minutes = Math.floor(deltaSeconds / 60),
+                seconds = (deltaSeconds - (minutes * 60)),
+                timeText = (minutes <= 0 ? '' : (minutes + (minutes == 1 ? ' minute and ' : ' minutes and '))) + (seconds + (seconds <= 1 ? ' second' :  ' seconds')),
+                movetext = (this.nbMove + ' move' + (this.nbMove > 1 ? 's' : ''));
+
+            $("#scoreMove").text(movetext);
+            $("#scoreTime").text(timeText);
+        }
+    },
+    
+    displayVictoryModal : function() {        
         $('#victoryModal .glyphicon-star').hide();
         for (var i = 1; i <= this.difficulty; i++) {
             $('#victory' + i + 'Icon').show();
         }
         
-        $('#victoryText').html('in ' + timeText + '<br/> and ' + movetext);
+        $('#victoryText').html('in ' + $("#scoreMove").text() + '<br/> and ' + $("#scoreTime").text());
         
         $('#victoryModal').modal({
             backdrop : 'static',
             keyboard : false
         });
+        
+        this.startDate = null;
     }
 
 };

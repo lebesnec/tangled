@@ -175,6 +175,7 @@ var Nodes = {
                 });
             
                 Twisted.nbMove ++;
+                Twisted.updateScore();
             
                 if (victory) {
                     Twisted.displayVictoryModal();

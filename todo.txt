@@ -1,7 +1,12 @@
 save max score
 save partie
-nb of tiles
+
 logo 
+
 mobile
+
 footer bar
+
+sound
+
 tutorial

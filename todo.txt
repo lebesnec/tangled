@@ -5,8 +5,4 @@ logo
 
 mobile
 
-footer bar
-
-sound
-
 tutorial

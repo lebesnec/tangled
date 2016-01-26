@@ -137,6 +137,13 @@ var Tiles = {
             })
             .attr("y2", function (t) {
                 return t.corners[(i + 1) % 6].y;
+            })
+            .attr("display", function (t) {
+                // we hide the left side of the heagon except for the first col
+                // this avoid 2px wide line when hexagone are side to side.
+                if (i == 2 && t.col != 0) {
+                    return 'none';
+                }
             });
     }
 

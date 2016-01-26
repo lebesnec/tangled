@@ -1,4 +1,5 @@
 var NB_TILES = 300,
+    FOOTER_HEIGHT = 30,
     // Styles nodes :
     NODE_FILL_COLOR = '#e8e8e8',
     NODE_FILL_COLOR_DRAGGED = '#d9d9d9',
@@ -35,40 +36,49 @@ var Twisted = {
     nbNodes : 10,
     linksDensity : 10,
     difficulty : 1,
+    dropAudio : new Audio('audio/click.mp3'),
     
     start : function() {
         this.width = window.innerWidth;
-        this.height = window.innerHeight - 57; // 57 = toolbar
+        this.height = window.innerHeight - 57 - FOOTER_HEIGHT; // 57 = toolbar
         
         $('#startGameButton').on('click', function () {
+            Twisted.playClick();
             $('#startModal').modal('hide');
             Twisted.startNewGame();
         });
         
         $('#quitGameButton').on('click', function () {
+            Twisted.playClick();
             $('#cancelButton').show();
             Twisted.startNewGame();
         });
         
         $('#cancelButton').on('click', function () {
+            Twisted.playClick();
             $('#cancelButton').hide();
             $('#difficultyModal').modal('hide');
         });
         
         $('#difficulty1Button').on('click', function () {
+            Twisted.playClick();
             Twisted.initGame(1);
         });
         $('#difficulty2Button').on('click', function () {
+            Twisted.playClick();
             Twisted.initGame(2);
         });
         $('#difficulty3Button').on('click', function () {
+            Twisted.playClick();
             Twisted.initGame(3);
         });
         $('#difficulty4Button').on('click', function () {
+            Twisted.playClick();
             Twisted.initGame(4);
         });
         
         $('#startNewGameButton').on('click', function () {
+            Twisted.playClick();
             $('#victoryModal').modal('hide');
             Twisted.startNewGame();
         });
@@ -113,6 +123,7 @@ var Twisted = {
     },
     
     initGame : function(difficulty) {
+        $('#cancelButton').hide();
         $('#difficultyModal').modal('hide');
         
         this.difficulty = difficulty;
@@ -204,6 +215,10 @@ var Twisted = {
         });
         
         this.startDate = null;
+    },
+    
+    playClick : function() {
+        this.dropAudio.play();
     }
 
 };

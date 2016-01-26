@@ -155,6 +155,8 @@ var Nodes = {
         
             .on("dragend", function (n) {
                 var victory = Links.checkIntersections(Twisted.render.links);
+
+               Twisted.playClick();
             
                 d3.select(this)
                     .transition('dragstartend')

@@ -144,6 +144,8 @@ var Links = {
                 .attr("y2", function (l) {
                     return l.target.startY;
                 })
+                // http://stackoverflow.com/questions/24653431/d3js-overlapping-elements-how-to-pass-through-clicks-to-lower-element
+                .attr("pointer-events", "none") 
             .transition()
             .duration(APPEAR_ANIMATION_DURATION_MS)
                 .attr("x1", function (l) {

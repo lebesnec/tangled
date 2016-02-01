@@ -55,6 +55,11 @@ var Twisted = {
             Twisted.startNewGame();
         });
         
+        $('#closeTutorialButton').on('click', function () {
+            Twisted.playClick();
+            $('#tutorialModal').modal('hide');
+        });
+        
         $('#cancelButton').on('click', function () {
             Twisted.playClick();
             $('#cancelButton').hide();
@@ -127,11 +132,19 @@ var Twisted = {
         $('#cancelButton').hide();
         $('#difficultyModal').modal('hide');
         
+        if (sessionStorage.getItem("tutorial") != "false") {
+            $('#tutorialModal').modal({
+                backdrop : 'static',
+                keyboard : false
+            });
+            sessionStorage.setItem("tutorial", "false");
+        }
+        
         this.difficulty = difficulty;
         
         if (difficulty == 1) {
-            this.nbNodes = 5;//TODO 10;
-            this.linksDensity = 15;
+            this.nbNodes = 4;//TODO 10;
+            this.linksDensity = 1500;
         } else if (difficulty == 2) {
             this.nbNodes = 25;
             this.linksDensity = 1;

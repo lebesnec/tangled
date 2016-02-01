@@ -1,11 +1,8 @@
-save max score
-save partie
-
 logo 
 
 mobile
 
-tutorial
+less crappy tutorial
 
 share button
 

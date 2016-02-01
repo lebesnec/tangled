@@ -36,7 +36,8 @@ var Twisted = {
     nbNodes : 10,
     linksDensity : 10,
     difficulty : 1,
-    dropAudio : new Audio('audio/click.mp3'),
+    clickAudio : new Audio('audio/click.mp3'),
+    successAudio : new Audio('audio/success.mp3'),
     
     start : function() {
         this.width = window.innerWidth;
@@ -201,13 +202,15 @@ var Twisted = {
         }
     },
     
-    displayVictoryModal : function() {        
+    displayVictoryModal : function() {   
+        this.successAudio.play();
+        
         $('#victoryModal .glyphicon-star').hide();
         for (var i = 1; i <= this.difficulty; i++) {
             $('#victory' + i + 'Icon').show();
         }
         
-        $('#victoryText').html('in ' + $("#scoreMove").text() + '<br/> and ' + $("#scoreTime").text());
+        $('#victoryText').html('in <b>' + $("#scoreMove").text() + '</b><br/> and <b>' + $("#scoreTime").text() + "</b>");
         
         $('#victoryModal').modal({
             backdrop : 'static',
@@ -218,7 +221,7 @@ var Twisted = {
     },
     
     playClick : function() {
-        this.dropAudio.play();
+        this.clickAudio.play();
     }
 
 };

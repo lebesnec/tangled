@@ -32,22 +32,26 @@
         <nav id="toolbar" class="navbar navbar-default">
             <div class="container-fluid">         
                 <div class="navbar-header">
-                    <button id="quitGameButton" type="button" class="btn btn-default navbar-btn navbar-left">
+                    <button id="quitGameButton" type="button" class="btn btn-danger navbar-btn navbar-left">
                         <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                     </button>
-                    <p class="navbar-brand">&nbsp;Twisted</p>
+                    <p id="title" class="navbar-brand">&nbsp;Twisted</p>
                 </div>
               
                 <div class="collapse navbar-collapse navbar-right">
-                    <p class="navbar-text"><span id="scoreMove" class="badge">0 move</span></p>
-                    <p class="navbar-text"><span id="scoreTime" class="badge">0 second</span></p>
+                    <p class="navbar-text">
+                        <span id="scoreMove" class="label label-info">0 move</span>
+                    </p>
+                    <p class="navbar-text">
+                        <span id="scoreTime" class="label label-info">0 second</span>
+                    </p>
                 </div>
             </div>
         </nav>
         
         <!-- Start modal -->
-        <div id="startModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-sm">
+        <div id="startModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog ">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title">Twisted</h1>
@@ -126,7 +130,7 @@
                         <span id="victory2Icon" class="glyphicon glyphicon-star" aria-hidden="true"></span>
                         <span id="victory3Icon" class="glyphicon glyphicon-star" aria-hidden="true"></span>
                         <span id="victory4Icon" class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                        <h2 class="modal-title">Victory !</h2>
+                        <h2 class="modal-title">Level completed !</h2>
                     </div>
                     <div class="modal-body">
                         <p id='victoryText'></p>

@@ -6,3 +6,7 @@ logo
 mobile
 
 tutorial
+
+share button
+
+simple clic => not increase nb move

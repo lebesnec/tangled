@@ -18,9 +18,18 @@ body {
     stroke-width: 1;
 }
 
+#title {
+    font-size: 28px;
+}
+
 .support-text {
     font-size: 16px;
-    text-align: left;
+    text-align: justify;
+}
+
+.support-text mark {
+    width: 200px;
+    font-size: 16px;
 }
 
 #toolbar {

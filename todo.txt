@@ -5,5 +5,3 @@ mobile
 less crappy tutorial
 
 share button
-
-simple clic => not increase nb move

@@ -2,8 +2,8 @@ var Nodes = {
 
     getDataNodes : function (dataTiles) {
         var me = this,
-            nbNodesRow = Math.ceil(Math.sqrt((Twisted.nbNodes * dataTiles.nbCol) / dataTiles.nbRow)),
-            nbNodesCol = Math.ceil(Twisted.nbNodes / nbNodesRow),
+            nbNodesRow = Math.round(Math.sqrt((Twisted.nbNodes * dataTiles.nbCol) / dataTiles.nbRow)),
+            nbNodesCol = Math.round(Twisted.nbNodes / nbNodesRow),
             deltaRow = Math.ceil((dataTiles.nbRow - nbNodesCol) / 2),
             deltaCol = Math.ceil((dataTiles.nbCol - nbNodesRow) / 2),
             nb = 0,
@@ -22,7 +22,8 @@ var Nodes = {
                         startX : tile.x,
                         startY : tile.y,
                         tile : tile,
-                        linksCount : 0
+                        linksCount : 0,
+                        previousTile : null
                     };
                     tile.node = node;
                     data.push(node);
@@ -42,7 +43,7 @@ var Nodes = {
         }
     },
     
-    moveNodeToTile : function(node, tile) {
+    moveNodeToTile : function(node, tile) {        
         // clean the current tile of the node :
         if (node.tile != null) {
             node.tile.node = null;
@@ -97,6 +98,8 @@ var Nodes = {
         return d3.behavior.drag()
         
             .on("dragstart", function (n) {
+                n.previousTile = n.tile;
+            
                 d3.select(this)
                     .transition('dragstartend')
                     .duration(DRAG_START_END_ANIMATION_DURATION_MS)
@@ -176,8 +179,11 @@ var Nodes = {
                     }
                 });
             
-                Twisted.nbMove ++;
-                Twisted.updateScore();
+                if (n.previousTile != n.tile) {
+                    Twisted.nbMove ++;
+                    Twisted.updateScore();
+                }
+                n.previousTile = null;
             
                 if (victory) {
                     Twisted.displayVictoryModal();

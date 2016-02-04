@@ -40,6 +40,8 @@ var Twisted = {
     successAudio : new Audio('audio/success.mp3'),
     
     start : function() {
+        $('[data-toggle="tooltip"]').tooltip();
+        
         this.width = window.innerWidth;
         this.height = window.innerHeight - 57 - FOOTER_HEIGHT; // 57 = toolbar
         
@@ -113,7 +115,7 @@ var Twisted = {
     
     drawStartBackground : function() {        
         var dataTiles = Tiles.getDataTiles(this.width, this.height);
-       
+
         this.nbNodes = ((dataTiles.nbCol - 4) * (dataTiles.nbRow - 2));
         this.linksDensity = 1;
         

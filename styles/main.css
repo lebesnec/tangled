@@ -23,6 +23,10 @@ body {
     #startModal .modal-dialog {
         width: 375px;
     }
+    
+    #tutorialModal .modal-dialog {
+        width: 300px;
+    }
 }
 
 #title {

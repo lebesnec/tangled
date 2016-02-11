@@ -2,6 +2,4 @@ logo
 
 mobile
 
-less crappy tutorial
-
 share button

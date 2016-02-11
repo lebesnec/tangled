@@ -18,15 +18,12 @@ body {
     stroke-width: 1;
 }
 
-/* http://stackoverflow.com/a/18000233/990193 */
-@media screen and (min-width: 768px) {
-    #startModal .modal-dialog {
-        width: 375px;
-    }
-    
-    #tutorialModal .modal-dialog {
-        width: 300px;
-    }
+ #startModal .modal-dialog {
+    width: 375px;
+}
+
+#tutorialModal .modal-dialog {
+    width: 300px;
 }
 
 #title {

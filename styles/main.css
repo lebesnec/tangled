@@ -46,6 +46,10 @@ body {
     background-color: #fafafa;
 }
 
+#quitGameButton {
+    margin-left: 15px;
+}
+
 #difficultyModal .modal-body button {
     width: 240px;
     text-align: right;

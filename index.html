@@ -32,13 +32,17 @@
         <nav id="toolbar" class="navbar navbar-default">
             <div class="container-fluid">         
                 <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#toolbarScore">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
                     <button id="quitGameButton" type="button" class="btn btn-danger navbar-btn navbar-left" data-toggle="tooltip" data-placement="bottom" title="Start a new game">
                         <span class="glyphicon glyphicon-refresh"></span>
                     </button>
                     <p id="title" class="navbar-brand">&nbsp;Twisted</p>
-                </div>
-              
-                <div class="collapse navbar-collapse navbar-right">
+                </div>              
+                <div class="collapse navbar-collapse navbar-right" id="toolbarScore">
                     <p class="navbar-text">
                         <span id="scoreMove" class="label label-info">0 move</span>
                     </p>

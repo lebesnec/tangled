@@ -209,7 +209,7 @@ var Twisted = {
                 deltaSeconds = Math.floor((now.getTime() - this.startDate.getTime()) / 1000),
                 minutes = Math.floor(deltaSeconds / 60),
                 seconds = (deltaSeconds - (minutes * 60)),
-                timeText = (minutes <= 0 ? '' : (minutes + (minutes == 1 ? ' minute and ' : ' minutes and '))) + (seconds + (seconds <= 1 ? ' second' :  ' seconds')),
+                timeText = (minutes <= 0 ? '' : (minutes + (minutes == 1 ? ' minute ' : ' minutes '))) + (seconds + (seconds <= 1 ? ' second' :  ' seconds')),
                 movetext = (this.nbMove + ' move' + (this.nbMove > 1 ? 's' : ''));
 
             $("#scoreMove").text(movetext);

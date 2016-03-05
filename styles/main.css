@@ -43,11 +43,24 @@ body {
 #toolbar {
     margin-bottom: 0px;
     border-color: #fafafa;
-    background-color: #fafafa;
+    background-color: #fafafa;    
 }
 
-#quitGameButton {
-    margin-left: 15px;
+#score {
+    float: right!important;
+    margin-right: -15px;
+}
+
+#score span {
+    float: left;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 0px;
+    margin-right: 15px;
+}
+
+#scoreMove, #scoreTime {
+    color: white;
 }
 
 #difficultyModal .modal-body button {

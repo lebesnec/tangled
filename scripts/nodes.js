@@ -80,6 +80,20 @@ var Nodes = {
                 .style("fill", NODE_FILL_COLOR)
                 .style("stroke", NODE_STROKE_COLOR)
                 .style("stroke-width", 1)
+                .on("mouseover", function(n) {      
+                    d3.select(this)
+                        .transition('mouseover')        
+                        .duration(DRAG_START_END_ANIMATION_DURATION_MS)
+                            .style("fill", NODE_FILL_COLOR_DRAGGED)
+                            .style("stroke", NODE_STROKE_COLOR_DRAGGED);
+                    })                  
+                .on("mouseout", function(n) {       
+                    d3.select(this)
+                        .transition('mouseout')        
+                        .duration(DRAG_START_END_ANIMATION_DURATION_MS)
+                            .style("fill", NODE_FILL_COLOR)
+                            .style("stroke", NODE_STROKE_COLOR);
+                })
                 .call(Nodes.getDragBehaviour())
             .transition()
             .duration(APPEAR_ANIMATION_DURATION_MS)

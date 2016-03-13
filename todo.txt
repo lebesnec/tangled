@@ -1,5 +1,7 @@
 logo 
 
-mobile
+app
+
+rotation
 
 share button

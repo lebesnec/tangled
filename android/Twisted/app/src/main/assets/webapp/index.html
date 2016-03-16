@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+        <title>Twisted</title>
+
+        <link rel="stylesheet" href="libraries/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="styles/main.css">
+    </head>
+
+    <body id="d3">
+        <script src="libraries/jquery/jquery-2.1.4.min.js"></script>
+        <script src="libraries/bootstrap/js/bootstrap.min.js"></script>
+        <script src="libraries/d3/d3.min.js"></script>
+
+        <script src="scripts/Tiles.js"></script>
+        <script src="scripts/Nodes.js"></script>
+        <script src="scripts/Links.js"></script>
+        <script src="scripts/Twisted.js"></script>
+
+        <script type="text/javascript">
+            $(function() {
+                Twisted.start();
+            });
+        </script>
+        
+        <!-- Toolbar -->
+        <nav id="toolbar" class="navbar navbar-default">
+            <div class="container-fluid">
+                <button id="quitGameButton" type="button" class="btn btn-danger navbar-btn navbar-left" data-toggle="tooltip" data-placement="bottom" title="Start a new game">
+                    <span class="glyphicon glyphicon-refresh"></span>
+                </button>
+                <span id="title" class="navbar-brand hidden-xs">&nbsp;Twisted</span>                  
+                <span id="score" class="navbar-right">                 
+                    <span id="scoreMove" class="label label-info navbar-text">0 move</span>                   
+                    <span id="scoreTime" class="label label-info navbar-text">0 second</span>                   
+                </span>
+           </div>
+        </nav>
+        
+        <!-- Start modal -->
+        <div id="startModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title">Twisted</h1>
+                    </div>
+                    <div class="modal-body support-text">
+                        <p>This game is free but the developer accepts your support by letting you send what you think is fair (beer, gadget, snack, gold bar  ...) to this address :</p>
+                        <mark class="center-block">
+                            Christophe Le Besnerais<br>
+                            10C rue Ampère<br>
+                            38000 Grenoble<br>
+                            FRANCE<br>                       
+                        </mark>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="startGameButton" type="button" class="btn btn-lg btn-primary btn-block">Play</button>
+                        <br/>
+                        <div class="btn-group btn-group-lg btn-group-justified" role="group">
+                            <a class="btn btn-info twitter" target="_blank" href="https://twitter.com/christophe_lb" role="button">
+                                <img src="images/twitter.png"/>
+                            </a>
+                            <a class="btn btn-info mail" target="_blank" href="mailto:christophe.androidmarket@gmail.com?Subject=Hello" role="button">
+                                <img src="images/mail.png"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+         <!-- Difficulty modal -->
+        <div id="difficultyModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title">Difficulty</h1>
+                    </div>
+                    <div class="modal-body">
+                        <div class="btn-group-vertical btn-group-lg" role="group">
+                            <button id="difficulty1Button" type="button" class="btn btn-success">
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                Easy
+                            </button>
+                            <button id="difficulty2Button" type="button" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                Difficult
+                            </button>
+                            <button id="difficulty3Button" type="button" class="btn btn-warning">
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                Hard
+                            </button>
+                            <button id="difficulty4Button" type="button" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                Insane
+                            </button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="cancelButton" type="button" class="btn btn-lg btn-block">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tutorial modal -->
+        <div id="tutorialModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body ">
+                        <p>Move the circles to remove all the intersections.</p>
+                        <p><img src="images/tutorial.gif"></img></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="closeTutorialButton" type="button" class="btn btn-lg btn-primary btn-block">Got it !</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Victory modal -->
+        <div id="victoryModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span id="victory1Icon" class="glyphicon glyphicon-star"></span>
+                        <span id="victory2Icon" class="glyphicon glyphicon-star"></span>
+                        <span id="victory3Icon" class="glyphicon glyphicon-star"></span>
+                        <span id="victory4Icon" class="glyphicon glyphicon-star"></span>
+                        <h2 class="modal-title">Level completed !</h2>
+                    </div>
+                    <div class="modal-body">
+                        <p id='victoryText'></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="startNewGameButton" type="button" class="btn btn-lg btn-primary btn-block">Play again</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+    
+</html> 

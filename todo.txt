@@ -1,3 +1,9 @@
-logo 
+exception
+
+test browser
+
+rating android store
 
 share button
+
+web icon

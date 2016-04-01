@@ -134,21 +134,21 @@ var Twisted = {
         $('#cancelButton').hide();
         $('#difficultyModal').modal('hide');
         
-        if (sessionStorage.getItem("tutorial") != "false") {
+        if (localStorage.getItem("tutorial") != "false") {
             $('#tutorialModal').modal({
                 backdrop : 'static',
                 keyboard : false
             });
-            sessionStorage.setItem("tutorial", "false");
+            localStorage.setItem("tutorial", "false");
         }
         
         this.difficulty = difficulty;
         
         if (difficulty == 1) {
-            this.nbNodes = 4;//TODO 10;
+            this.nbNodes = 5;//TODO 10;
             this.linksDensity = 1500;
         } else if (difficulty == 2) {
-            this.nbNodes = 25;
+            this.nbNodes = 5;
             this.linksDensity = 1;
         } else if (difficulty == 3) {
             this.nbNodes = 40;
@@ -220,6 +220,40 @@ var Twisted = {
     displayVictoryModal : function() {   
         this.successAudio.play();
         
+        // Update highscore moves :
+        var maxMoves = localStorage.getItem("highscore.moves." + this.difficulty);
+        if (maxMoves == null) {
+            maxMoves = '999999';
+        }
+        maxMoves = parseInt(maxMoves);
+        $('#highscoreMovesNew').hide();
+        if (maxMoves > this.nbMove) {
+            maxMoves = this.nbMove;
+            $('#highscoreMovesNew').show();
+        }
+        localStorage.setItem("highscore.moves." + this.difficulty, maxMoves);
+        $('#highscoreMovesText').html(maxMoves + ' move' + (this.nbMove > 1 ? 's' : ''));
+        
+        // update highscore time :
+        var minTime = localStorage.getItem("highscore.time." + this.difficulty),
+            now = new Date(),
+            deltaSeconds = Math.floor((now.getTime() - this.startDate.getTime()) / 1000);
+        if (minTime == null) {
+            minTime = '999999';
+        }
+        minTime = parseInt(minTime);
+        $('#highscoreTimeNew').hide();
+        if (minTime > deltaSeconds) {
+            minTime = deltaSeconds;
+            $('#highscoreTimeNew').show();
+        }
+        localStorage.setItem("highscore.time." + this.difficulty, minTime);
+        var minutes = Math.floor(minTime / 60),
+            seconds = (minTime - (minutes * 60)),
+            timeText = (minutes <= 0 ? '' : (minutes + (minutes == 1 ? ' minute ' : ' minutes '))) + (seconds + (seconds <= 1 ? ' second' :  ' seconds'));
+        $('#highscoreTimeText').html(timeText);
+        
+        // update the content of the modal :
         $('#victoryModal .glyphicon-star').hide();
         for (var i = 1; i <= this.difficulty; i++) {
             $('#victory' + i + 'Icon').show();

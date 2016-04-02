@@ -10,9 +10,21 @@
 
         <link rel="stylesheet" href="libraries/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="styles/main.css">
+        
+        <link rel="shortcut icon" href="favicon.ico"/>
     </head>
 
     <body id="d3">
+        <!-- Facebook -->
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.5&appId=104405489595814";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+        
         <script src="libraries/jquery/jquery-2.1.4.min.js"></script>
         <script src="libraries/bootstrap/js/bootstrap.min.js"></script>
         <script src="libraries/d3/d3.min.js"></script>
@@ -61,14 +73,25 @@
                     <div class="modal-footer">
                         <button id="startGameButton" type="button" class="btn btn-lg btn-primary btn-block">Play</button>
                         <br/>
-                        <div class="btn-group btn-group-lg btn-group-justified" role="group">
+                        <!-- TODO url facebook et play store -->
+                        <div class="row">
+                            <div class="col-md-8">
+                                <a href="https://play.google.com/store/apps/details?id=poker.tm&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-AC-global-none-all-co-pr-py-PartBadges-Oct1515-1">
+                                    <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge-border.png" width="170px"/>
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-width="100" data-layout="box_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                            </div>
+                        </div>
+                        <!-- <div class="btn-group btn-group-lg btn-group-justified" role="group">
                             <a class="btn btn-info twitter" target="_blank" href="https://twitter.com/christophe_lb" role="button">
                                 <img src="images/twitter.png"/>
                             </a>
                             <a class="btn btn-info mail" target="_blank" href="mailto:christophe.androidmarket@gmail.com?Subject=Hello" role="button">
                                 <img src="images/mail.png"/>
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

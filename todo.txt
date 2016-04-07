@@ -1,7 +1,5 @@
 exception
 
-test browser
-
-web icon
-
 obfuscation
+
+hosting

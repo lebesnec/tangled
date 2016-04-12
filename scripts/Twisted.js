@@ -122,6 +122,8 @@ var Twisted = {
         var dataNodes = Nodes.getDataNodes(dataTiles),
             dataLinks = Links.getDataLinks(dataTiles, dataNodes);
         
+        this.a = !(document.domain == '127.0.0.1' || document.domain == 'TODO'); //TODO
+        
         this.data = {
             tiles : dataTiles,
             nodes : dataNodes,

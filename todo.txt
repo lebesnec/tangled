@@ -1,5 +1,11 @@
 exception
 
-obfuscation
-
 hosting
+
+build :
+increment version in final.js url
+replace finaL.js http://closure-compiler.appspot.com/home
+suppr all other JS in scripts folder
+comment include JS in index.html, uncomment final.js
+replace webapp in android
+deploy

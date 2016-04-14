@@ -42,7 +42,15 @@
 
         <script type="text/javascript">
             $(function() {
-                Twisted.start();
+                try {
+                    Twisted.start();
+                } catch (e) {
+                    if (typeof Android == 'undefined') {
+                       console.error(e);
+                    } else {
+                        Android.reportError(e.name + ' : ' + e.message);
+                    }
+                }
             });
         </script>
         

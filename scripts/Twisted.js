@@ -1,4 +1,4 @@
-var NB_TILES = 300,
+var NB_TILES = 120,
     FOOTER_HEIGHT = 30,
     // Styles nodes :
     NODE_FILL_COLOR = '#e8e8e8',
@@ -122,7 +122,7 @@ var Twisted = {
         var dataNodes = Nodes.getDataNodes(dataTiles),
             dataLinks = Links.getDataLinks(dataTiles, dataNodes);
         
-        this.a = !(document.domain == '127.0.0.1' || document.domain == 'TODO' || typeof Android != 'undefined'); //TODO url 
+        this.a = !(document.domain == '127.0.0.1' || document.domain == 'TODO'); //TODO url + android
         
         this.data = {
             tiles : dataTiles,

@@ -4,8 +4,8 @@ var Nodes = {
         var me = this,
             nbNodesRow = Math.round(Math.sqrt((Twisted.nbNodes * dataTiles.nbCol) / dataTiles.nbRow)),
             nbNodesCol = Math.round(Twisted.nbNodes / nbNodesRow),
-            deltaRow = Math.ceil((dataTiles.nbRow - nbNodesCol) / 2),
-            deltaCol = Math.ceil((dataTiles.nbCol - nbNodesRow) / 2),
+            deltaRow = Math.floor((dataTiles.nbRow - nbNodesCol) / 2),
+            deltaCol = Math.floor((dataTiles.nbCol - nbNodesRow) / 2),
             nb = 0,
             data = [];
         

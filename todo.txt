@@ -1,8 +1,10 @@
 exception
 
-test + optimisation mobile
+optimisation mobile (perf, size node)
 
-screenchot
+tablet
+
+screenchot (tablet)
 
 hosting
 

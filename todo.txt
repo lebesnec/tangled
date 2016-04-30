@@ -6,7 +6,9 @@ tablet
 
 screenchot (tablet)
 
-hosting
+url
+
+set up domain
 
 build :
 increment version in final.js url

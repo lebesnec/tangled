@@ -24,7 +24,7 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-var Twisted = {
+var Tangled = {
     
     width : null,
     height : null,
@@ -46,49 +46,49 @@ var Twisted = {
         this.height = window.innerHeight - 57 - FOOTER_HEIGHT; // 57 = toolbar
         
         $('#startGameButton').on('click', function () {
-            Twisted.playClick();
+            Tangled.playClick();
             $('#startModal').modal('hide');
-            Twisted.startNewGame();
+            Tangled.startNewGame();
         });
         
         $('#quitGameButton').on('click', function () {
-            Twisted.playClick();
+            Tangled.playClick();
             $('#cancelButton').show();
-            Twisted.startNewGame();
+            Tangled.startNewGame();
         });
         
         $('#closeTutorialButton').on('click', function () {
-            Twisted.playClick();
+            Tangled.playClick();
             $('#tutorialModal').modal('hide');
         });
         
         $('#cancelButton').on('click', function () {
-            Twisted.playClick();
+            Tangled.playClick();
             $('#cancelButton').hide();
             $('#difficultyModal').modal('hide');
         });
         
         $('#difficulty1Button').on('click', function () {
-            Twisted.playClick();
-            Twisted.initGame(1);
+            Tangled.playClick();
+            Tangled.initGame(1);
         });
         $('#difficulty2Button').on('click', function () {
-            Twisted.playClick();
-            Twisted.initGame(2);
+            Tangled.playClick();
+            Tangled.initGame(2);
         });
         $('#difficulty3Button').on('click', function () {
-            Twisted.playClick();
-            Twisted.initGame(3);
+            Tangled.playClick();
+            Tangled.initGame(3);
         });
         $('#difficulty4Button').on('click', function () {
-            Twisted.playClick();
-            Twisted.initGame(4);
+            Tangled.playClick();
+            Tangled.initGame(4);
         });
         
         $('#startNewGameButton').on('click', function () {
-            Twisted.playClick();
+            Tangled.playClick();
             $('#victoryModal').modal('hide');
-            Twisted.startNewGame();
+            Tangled.startNewGame();
         });
         
         
@@ -101,7 +101,7 @@ var Twisted = {
             keyboard : false
         });
         
-        setInterval($.proxy(Twisted.updateScore, Twisted), 1000);
+        setInterval($.proxy(Tangled.updateScore, Tangled), 1000);
     },
 
     startNewGame : function () {
@@ -121,8 +121,8 @@ var Twisted = {
         
         var dataNodes = Nodes.getDataNodes(dataTiles),
             dataLinks = Links.getDataLinks(dataTiles, dataNodes);
-        
-        this.a = !(document.domain == '127.0.0.1' || document.domain == 'TODO'); //TODO url + android
+
+        this.a = !(document.domain == '127.0.0.1' || document.domain == 'lebesnec.twisted.s3-website-eu-west-1.amazonaws.com'); //TODO url + android
         
         this.data = {
             tiles : dataTiles,

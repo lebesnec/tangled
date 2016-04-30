@@ -9,8 +9,6 @@ import android.webkit.WebView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String error = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
         WebView webView = (WebView) findViewById(R.id.webView);
         webView.setWebChromeClient(new WebChromeClient() {
+            @Override
             public boolean onConsoleMessage(ConsoleMessage cm) {
                 // report JS error to Android :
                 if (cm.messageLevel() == ConsoleMessage.MessageLevel.ERROR) {
@@ -33,4 +32,5 @@ public class MainActivity extends AppCompatActivity {
 
         webView.loadUrl("file:///android_asset/webapp/index.html");
     }
+
 }

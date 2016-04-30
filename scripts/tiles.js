@@ -116,7 +116,7 @@ var Tiles = {
                 return t.y;
             });
         
-        if (Twisted.a) {
+        if (Tangled.a) {
             tiles.attr("y1", function (t) {
                 return t.corners[i].x;
             })

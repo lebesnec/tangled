@@ -10,8 +10,6 @@ screenchot (tablet + mobile)
 
 tangled.eu in app
 
-www.tangled.eu
-
 build :
 increment version in final.js url
 replace finaL.js http://closure-compiler.appspot.com/home

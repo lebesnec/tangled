@@ -1,4 +1,4 @@
-package com.twisted.christophelb.twisted;
+package eu.tangled;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

@@ -122,7 +122,7 @@ var Twisted = {
         var dataNodes = Nodes.getDataNodes(dataTiles),
             dataLinks = Links.getDataLinks(dataTiles, dataNodes);
         
-        this.a = true;//!(document.domain == '127.0.0.1' || document.domain == 'TODO' || typeof Android != 'undefined'); //TODO url 
+        this.a = false;//!(document.domain == '127.0.0.1' || document.domain == 'TODO' || typeof Android != 'undefined'); //TODO url
         
         this.data = {
             tiles : dataTiles,

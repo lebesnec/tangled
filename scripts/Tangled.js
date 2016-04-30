@@ -122,7 +122,7 @@ var Tangled = {
         var dataNodes = Nodes.getDataNodes(dataTiles),
             dataLinks = Links.getDataLinks(dataTiles, dataNodes);
 
-        this.a = !(document.domain == '127.0.0.1' || document.domain == 'lebesnec.twisted.s3-website-eu-west-1.amazonaws.com'); //TODO url + android
+        this.a = !(document.domain == '127.0.0.1' || document.domain == 'tangled.eu' || document.domain == 'www.tangled.eu'); //TODO url + android
         
         this.data = {
             tiles : dataTiles,

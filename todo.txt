@@ -4,11 +4,13 @@ optimisation mobile (perf, size node)
 
 tablet
 
-screenchot (tablet)
+android : facebook button
 
-url
+screenchot (tablet + mobile)
 
-set up domain
+tangled.eu in app
+
+www.tangled.eu
 
 build :
 increment version in final.js url

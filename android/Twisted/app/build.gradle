@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.twisted.christophelb.twisted"
+        applicationId "com.tangled.christophelb.tangled"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 2

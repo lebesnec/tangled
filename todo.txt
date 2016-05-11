@@ -1,14 +1,8 @@
-exception
-
-optimisation mobile (perf, size node)
-
 tablet
 
-android : facebook button
+facebook button
 
 screenchot (tablet + mobile)
-
-tangled.eu in app
 
 build :
 increment version in final.js url

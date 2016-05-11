@@ -1,6 +1,6 @@
 {
-    "name" : "Twisted",
-    "short_name" : "Twisted",
+    "name" : "Tangled",
+    "short_name" : "Tangled",
     "background_color" : "white",
     "theme_color" : "red",
     "start_url" : "index.html",
@@ -11,8 +11,8 @@
     "related_applications": [
         {
             "platform" : "play",
-            "url" : "https://play.google.com/store/apps/details?id=com.example.app1", // TODO
-            "id" : "com.example.app1"
+            "url" : "https://play.google.com/store/apps/details?id=eu.tangled",
+            "id" : "eu.tangled" 
         }
     ],
     

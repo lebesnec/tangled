@@ -11,8 +11,8 @@
     "related_applications": [
         {
             "platform" : "play",
-            "url" : "https://play.google.com/store/apps/details?id=com.twisted.christophelb.twisted", // TODO
-            "id" : "com.twisted.christophelb.twisted" //TODO
+            "url" : "https://play.google.com/store/apps/details?id=eu.tangled",
+            "id" : "eu.tangled" 
         }
     ],
     

@@ -27,15 +27,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             }
-//            @Override
-//            public void onPageFinished(WebView view, String url) {
-//                if (url.startsWith("https://www.facebook.com/connect/connect_to_external_page_widget_loggedin.php")){
-//                    String redirectUrl = getFacebookLikeUrl();
-//                    view.loadUrl(redirectUrl);
-//                    return;
-//                }
-//                super.onPageFinished(view, url);
-//            }
         });
         webView.setWebChromeClient(new WebChromeClient() {
             @Override

@@ -3,9 +3,9 @@ var NB_TILES = 120,
     ANDROID = (typeof Android != 'undefined'),
     // Styles nodes :
     NODE_FILL_COLOR = '#e8e8e8',
-    NODE_FILL_COLOR_DRAGGED = '#d9d9d9',
+    NODE_FILL_COLOR_DRAGGED = '#9a9a9a',
     NODE_STROKE_COLOR = '#bfbfbf',    
-    NODE_STROKE_COLOR_DRAGGED = '#b4b4b4',
+    NODE_STROKE_COLOR_DRAGGED = '#777777',
     // Styles lines :
     STROKE_COLOR = '#343434',    
     STROKE_COLOR_DRAGGED = '#3e6bff',

@@ -40,10 +40,11 @@ body {
     font-size: 16px;
 }
 
-#rateMe {
+#footerWeb, #footerAndroid {
+    margin-top: 10px;
+    padding-bottom: 5px;
     text-align: center;
     font-size: 16px;
-    margin-top: 10px;
 }
 
 #toolbar {

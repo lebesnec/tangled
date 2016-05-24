@@ -9,7 +9,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="manifest" href="manifest.json">
 
-        <title>tangled.eu</title>
+        <title>Tangled</title>
 
         <link rel="stylesheet" href="libraries/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="styles/main.css">
@@ -24,19 +24,34 @@
     </head>
 
     <body id="d3">
+        <!-- facebook -->
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1139190409445050";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
         
         <script src="libraries/jquery/jquery-2.1.4.min.js"></script>
         <script src="libraries/bootstrap/js/bootstrap.min.js"></script>
         <script src="libraries/d3/d3.min.js"></script>
 
-        <script src="scripts/Tiles.js"></script>
+        <!--<script src="scripts/Tiles.js"></script>
         <script src="scripts/Nodes.js"></script>
         <script src="scripts/Links.js"></script>
-        <script src="scripts/Tangled.js"></script>
-        <!--<script src="scripts/final.js?version=1"></script>-->
+        <script src="scripts/Tangled.js"></script>-->
+        <script src="scripts/final.js?version=2"></script>
 
         <script type="text/javascript">
             $(function() {
+                if (typeof Android == 'undefined') {
+                    $('#footerWeb').show();
+                } else {
+                    $('#footerAndroid').show();
+                }
+                
                 Tangled.start();
             });
         </script>
@@ -47,7 +62,7 @@
                 <button id="quitGameButton" type="button" class="btn btn-danger navbar-btn navbar-left" data-toggle="tooltip" data-placement="bottom" title="Start a new game">
                     <span class="glyphicon glyphicon-refresh"></span>
                 </button>
-                <span id="title" class="navbar-brand hidden-xs">&nbsp;tangled.eu</span>                  
+                <span id="title" class="navbar-brand hidden-xs">&nbsp;Tangled</span>                  
                 <span id="score" class="navbar-right">                 
                     <span id="scoreMove" class="label label-info navbar-text">0 move</span>                   
                     <span id="scoreTime" class="label label-info navbar-text">0 second</span>                   
@@ -60,7 +75,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title">tangled.eu</h1>
+                        <h1 class="modal-title">Tangled</h1>
                     </div>
                     <div class="modal-body support-text">
                         <p>This game is free but if you want to help the developer you can send whatever you like (beer, gadget, gold bar ...) here :</p>
@@ -73,26 +88,21 @@
                     </div>
                     <div class="modal-footer">
                         <button id="startGameButton" type="button" class="btn btn-lg btn-primary btn-block">Play</button>                    
-                        <p id="rateMe">If you enjoy this game please take a moment to rate it/like it :</p>
-                        <div class="row" style="padding-bottom: 5px">
-                            <div class="col-md-8 col-xs-8">
-                                <a href="https://play.google.com/store/apps/details?id=eu.tangled&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-AC-global-none-all-co-pr-py-PartBadges-Oct1515-1">
-                                    <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge-border.png" width="170px"/>
-                                </a>
-                            </div>
-                            <div class="col-md-4 col-xs-4">
-                                <iframe src="https://www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftangled.eu%2F&width=100&layout=box_count&action=like&show_faces=false&share=false&height=65&appId=104405489595814" width="100" height="65" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-                            </div>
+                       
+                        <div id="footerWeb" style="display: none">
+                            <a href="https://play.google.com/store/apps/details?id=eu.tangled&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-AC-global-none-all-co-pr-py-PartBadges-Oct1515-1">
+                                <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge-border.png" width="170px"/>
+                            </a>
+                            <div style="margin-top: 7px;" class="fb-like" data-href="http://tangled.eu" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
                         </div>
-                        <a class="btn btn-info center-block" role="button" href="http://tangled.eu">Play on www.tangled.eu</a>
-                        <!-- <div class="btn-group btn-group-lg btn-group-justified" role="group">
-                            <a class="btn btn-info twitter" target="_blank" href="https://twitter.com/christophe_lb" role="button">
-                                <img src="images/twitter.png"/>
+                        
+                        <div id="footerAndroid" style="display: none">
+                            <a class="btn btn-success center-block" role="button" href="http://tangled.eu">Play on www.tangled.eu</a>
+                            <p style="margin-bottom: 3px; margin-top: 7px;">If you enjoy this game please take a moment to rate it on the Play Store :</p>
+                            <a href="https://play.google.com/store/apps/details?id=eu.tangled&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-AC-global-none-all-co-pr-py-PartBadges-Oct1515-1">
+                                <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge-border.png" width="170px"/>
                             </a>
-                            <a class="btn btn-info mail" target="_blank" href="mailto:christophe.androidmarket@gmail.com?Subject=Hello" role="button">
-                                <img src="images/mail.png"/>
-                            </a>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>

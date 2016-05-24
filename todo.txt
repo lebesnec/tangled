@@ -5,5 +5,6 @@ replace finaL.js
 suppr all other JS in scripts folder
 comment include JS in index.html, uncomment final.js
 replace webapp in android
+remove google analytics from android
 upgrade version in gradle
 deploy to play store and amazon https://console.aws.amazon.com/s3/home?region=eu-west-1

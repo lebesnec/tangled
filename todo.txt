@@ -13,5 +13,3 @@ deploy to play store and amazon https://console.aws.amazon.com/s3/home?region=eu
 
 disble multitouch
 bug dnd
-highscore
-sound

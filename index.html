@@ -50,13 +50,17 @@
         <script src="libraries/bootstrap/js/bootstrap.min.js"></script>
         <script src="libraries/d3/d3.min.js"></script>
 
-        <!--<script src="scripts/Tiles.js"></script>
+        <script src="scripts/Tiles.js"></script>
         <script src="scripts/Nodes.js"></script>
         <script src="scripts/Links.js"></script>
-        <script src="scripts/Tangled.js"></script>-->
-        <script src="scripts/final.js?version=2"></script>
+        <script src="scripts/Tangled.js"></script>
+        <!--<script src="scripts/final.js?version=2"></script>-->
 
         <script type="text/javascript">
+            document.body.addEventListener('touchmove', function(event) {
+                event.preventDefault();
+            }, false); 
+
             $(function() {
                 if (typeof Android == 'undefined') {
                     $('#footerWeb').show();
@@ -154,6 +158,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button id="highscoreButton" type="button" class="btn btn-lg btn-info btn-block">Highscore</button>
                         <button id="cancelButton" type="button" class="btn btn-lg btn-block">Cancel</button>
                     </div>
                 </div>
@@ -170,6 +175,57 @@
                     </div>
                     <div class="modal-footer">
                         <button id="closeTutorialButton" type="button" class="btn btn-lg btn-primary btn-block">Play now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Highscore modal -->
+        <div id="highscoreModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title">Highscore</h1>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-group">
+                            <li class="list-group-item difficulty1">
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                Easy
+                            </li>
+                            <li class="list-group-item" id='highscoreMovesText1'>&nbsp;</li>
+                            <li class="list-group-item" id='highscoreTimeText1'>&nbsp;</li>
+                            
+                            <li class="list-group-item difficulty2">
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                Difficult
+                            </li>
+                            <li class="list-group-item" id='highscoreMovesText2'>&nbsp;</li>
+                            <li class="list-group-item" id='highscoreTimeText2'>&nbsp;</li>
+
+                            <li class="list-group-item difficulty3">
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                Hard
+                            </li>
+                            <li class="list-group-item" id='highscoreMovesText3'>&nbsp;</li>
+                            <li class="list-group-item" id='highscoreTimeText3'>&nbsp;</li>
+                                                   
+                            <li class="list-group-item difficulty4">
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                <span class="glyphicon glyphicon-star pull-left"></span>
+                                Insane
+                            </li>
+                            <li class="list-group-item" id='highscoreMovesText4'>&nbsp;</li>
+                            <li class="list-group-item" id='highscoreTimeText4'>&nbsp;</li>
+                        </ul>                        
+                    </div>
+                    <div class="modal-footer">
+                        <button id="closeHighscoreButton" type="button" class="btn btn-lg btn-primary btn-block">Back</button>
                     </div>
                 </div>
             </div>

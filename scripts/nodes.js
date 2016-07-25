@@ -1,4 +1,6 @@
 var Nodes = {
+    
+    currentDraggedNode : null,
 
     getDataNodes : function (dataTiles) {
         var me = this,
@@ -35,7 +37,7 @@ var Nodes = {
     },
     
     shuffle : function(dataNodes, dataTiles) {
-        for (var i = 0; i < dataNodes.length; i++) {            
+        for (var i = 0; i < dataNodes.length; i++) {
             var node = dataNodes[i],
                 randomTile = Tiles.getRandomEmptyTile(dataTiles);
             
@@ -112,6 +114,12 @@ var Nodes = {
         return d3.behavior.drag()
         
             .on("dragstart", function (n) {
+                if (Nodes.currentDraggedNode != null) {
+                    return;
+                } else {
+                    Nodes.currentDraggedNode = n;
+                }
+            
                 n.previousTile = n.tile;
             
                 d3.select(this)
@@ -136,6 +144,10 @@ var Nodes = {
             })
         
             .on("drag", function (n) {
+                if (Nodes.currentDraggedNode != n) {
+                    return;
+                }
+            
                 var nearestTile = Nodes.getNearestAvailableTile(n, d3.event.x, d3.event.y, Tangled.render.tiles);
                 
                 Nodes.moveNodeToTile(n, nearestTile);
@@ -171,7 +183,11 @@ var Nodes = {
             })
         
             .on("dragend", function (n) {
-                var victory = Links.checkIntersections(Tangled.render.links);
+                if (Nodes.currentDraggedNode != n) {
+                    return;
+                }
+            
+               var victory = Links.checkIntersections(Tangled.render.links);
 
                Tangled.playClick();
             
@@ -202,6 +218,8 @@ var Nodes = {
                 if (victory) {
                     Tangled.displayVictoryModal();
                 }
+            
+                Nodes.currentDraggedNode = null;
             });
     },
     

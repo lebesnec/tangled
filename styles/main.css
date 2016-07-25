@@ -104,3 +104,40 @@ body {
     vertical-align: middle;
     text-align: center;
 }
+
+#highscoreModal {
+    overflow-y: initial !important
+}
+
+#highscoreModal .modal-body {
+    height: 250px;
+    overflow-y: auto;
+}
+
+#highscoreModal ul {
+    margin-bottom: 0px !important;
+}
+
+#highscoreModal .difficulty1 {
+    text-align: right;
+    background-color: #5cb85c;
+    color: white;
+}
+
+#highscoreModal .difficulty2 {
+    text-align: right;
+    background-color: #337ab7;
+    color: white;
+}
+
+#highscoreModal .difficulty3 {
+    text-align: right;
+    background-color: #f0ad4e;
+    color: white;
+}
+
+#highscoreModal .difficulty4 {
+    text-align: right;
+    background-color: #d9534f;
+    color: white;
+}

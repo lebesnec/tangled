@@ -92,6 +92,18 @@ var Tangled = {
             Tangled.startNewGame();
         });
         
+        $('#highscoreButton').on('click', function () {
+            Tangled.playClick();
+            Tangled.displayHighscoreModal();
+            
+        });
+        
+        $('#closeHighscoreButton').on('click', function () {
+            Tangled.playClick();
+            $('#highscoreModal').modal('hide');
+            Tangled.startNewGame();
+        });
+        
         
         $('#cancelButton').hide();
         
@@ -235,7 +247,7 @@ var Tangled = {
             $('#highscoreMovesNew').show();
         }
         localStorage.setItem("highscore.moves." + this.difficulty, maxMoves);
-        $('#highscoreMovesText').html(maxMoves + ' move' + (this.nbMove > 1 ? 's' : ''));
+        $('#highscoreMovesText').html(maxMoves + ' move' + (maxMoves > 1 ? 's' : ''));
         
         // update highscore time :
         var minTime = localStorage.getItem("highscore.time." + this.difficulty),
@@ -270,6 +282,33 @@ var Tangled = {
         });
         
         this.startDate = null;
+    },
+    
+    displayHighscoreModal : function() {
+        $('#difficultyModal').modal('hide');
+        
+        $('#highscoreModal').modal({
+            backdrop : 'static',
+            keyboard : false
+        });
+        
+        for (var difficulty = 1; difficulty <= 4; difficulty++) {
+            // Highscore moves :
+            var maxMoves = localStorage.getItem("highscore.moves." + difficulty);
+            if (maxMoves != null) {
+                $('#highscoreMovesText' + difficulty).html(maxMoves + ' move' + (maxMoves > 1 ? 's' : ''));
+            }
+        
+            // Highscore time :
+            var minTime = localStorage.getItem("highscore.time." + difficulty);
+            if (minTime != null) {
+                minTime = parseInt(minTime);
+                var minutes = Math.floor(minTime / 60),
+                    seconds = (minTime - (minutes * 60)),
+                    timeText = (minutes <= 0 ? '' : (minutes + (minutes == 1 ? ' minute ' : ' minutes '))) + (seconds + (seconds <= 1 ? ' second' :  ' seconds'));
+                $('#highscoreTimeText' + difficulty).html(timeText);
+            }
+        }
     },
     
     playClick : function() {

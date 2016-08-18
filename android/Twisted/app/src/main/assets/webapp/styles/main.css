@@ -104,3 +104,65 @@ body {
     vertical-align: middle;
     text-align: center;
 }
+
+#highscoreModal .modal-dialog {
+    width: 300px;
+}
+
+#highscoreModal ul {
+    margin-bottom: 0px !important;
+}
+
+#highscoreModal .difficulty1 {
+    text-align: right;
+    background-color: #5cb85c;
+    color: white;
+    cursor: pointer;
+}
+
+#highscoreModal .difficulty1:hover {
+    background-color: #449d44;
+    border-color: #398439;
+}
+
+#highscoreModal .difficulty2 {
+    text-align: right;
+    background-color: #337ab7;
+    color: white;
+    cursor: pointer;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+#highscoreModal .difficulty2:hover {
+    background-color: #286090;
+    border-color: #204d74;
+}
+
+#highscoreModal .difficulty3 {
+    text-align: right;
+    background-color: #f0ad4e;
+    color: white;
+    cursor: pointer;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+#highscoreModal .difficulty3:hover {
+    background-color: #ec971f;
+    border-color: #d58512;
+}
+
+#highscoreModal .difficulty4 {
+    text-align: right;
+    background-color: #d9534f;
+    color: white;
+    cursor: pointer;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+#highscoreModal .difficulty4:hover {
+    background-color: #c9302c;
+    border-color: #ac2925;
+}

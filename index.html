@@ -50,11 +50,11 @@
         <script src="libraries/bootstrap/js/bootstrap.min.js"></script>
         <script src="libraries/d3/d3.min.js"></script>
 
-        <script src="scripts/Tiles.js"></script>
+        <!--<script src="scripts/Tiles.js"></script>
         <script src="scripts/Nodes.js"></script>
         <script src="scripts/Links.js"></script>
-        <script src="scripts/Tangled.js"></script>
-        <!--<script src="scripts/final.js?version=2"></script>-->
+        <script src="scripts/Tangled.js"></script>-->
+        <script src="scripts/final.js?version=3"></script>
 
         <script type="text/javascript">
             document.body.addEventListener('touchmove', function(event) {
@@ -182,47 +182,67 @@
 
         <!-- Highscore modal -->
         <div id="highscoreModal" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-sm">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title">Highscore</h1>
                     </div>
                     <div class="modal-body">
-                        <ul class="list-group">
-                            <li class="list-group-item difficulty1">
-                                <span class="glyphicon glyphicon-star pull-left"></span>
-                                Easy
-                            </li>
-                            <li class="list-group-item" id='highscoreMovesText1'>&nbsp;</li>
-                            <li class="list-group-item" id='highscoreTimeText1'>&nbsp;</li>
-                            
-                            <li class="list-group-item difficulty2">
-                                <span class="glyphicon glyphicon-star pull-left"></span>
-                                <span class="glyphicon glyphicon-star pull-left"></span>
-                                Difficult
-                            </li>
-                            <li class="list-group-item" id='highscoreMovesText2'>&nbsp;</li>
-                            <li class="list-group-item" id='highscoreTimeText2'>&nbsp;</li>
-
-                            <li class="list-group-item difficulty3">
-                                <span class="glyphicon glyphicon-star pull-left"></span>
-                                <span class="glyphicon glyphicon-star pull-left"></span>
-                                <span class="glyphicon glyphicon-star pull-left"></span>
-                                Hard
-                            </li>
-                            <li class="list-group-item" id='highscoreMovesText3'>&nbsp;</li>
-                            <li class="list-group-item" id='highscoreTimeText3'>&nbsp;</li>
-                                                   
-                            <li class="list-group-item difficulty4">
-                                <span class="glyphicon glyphicon-star pull-left"></span>
-                                <span class="glyphicon glyphicon-star pull-left"></span>
-                                <span class="glyphicon glyphicon-star pull-left"></span>
-                                <span class="glyphicon glyphicon-star pull-left"></span>
-                                Insane
-                            </li>
-                            <li class="list-group-item" id='highscoreMovesText4'>&nbsp;</li>
-                            <li class="list-group-item" id='highscoreTimeText4'>&nbsp;</li>
-                        </ul>                        
+                        <div class="panel-group" id="accordion">
+                          <div class="panel panel-default">
+                              
+                            <div class="panel-heading difficulty1" data-toggle="collapse" data-target="#collapse1" data-parent="#accordion">
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  Easy
+                            </div>
+                            <div id="collapse1" class="panel-collapse collapse in" role="tabpanel">
+                              <ul class="list-group">
+                                <li class="list-group-item" id='highscoreMovesText1'>&nbsp;</li>
+                                <li class="list-group-item" id='highscoreTimeText1'>&nbsp;</li>
+                              </ul>
+                            </div>
+                              
+                            <div class="panel-heading difficulty2" data-toggle="collapse" data-target="#collapse2" data-parent="#accordion">
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  Difficult                              
+                            </div>
+                            <div id="collapse2" class="panel-collapse collapse" role="tabpanel">
+                              <ul class="list-group">
+                                <li class="list-group-item" id='highscoreMovesText2'>&nbsp;</li>
+                                <li class="list-group-item" id='highscoreTimeText2'>&nbsp;</li>
+                              </ul>
+                            </div>
+                              
+                            <div class="panel-heading difficulty3" data-toggle="collapse" data-target="#collapse3" data-parent="#accordion">
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  Hard
+                            </div>
+                            <div id="collapse3" class="panel-collapse collapse" role="tabpanel">
+                              <ul class="list-group">
+                                <li class="list-group-item" id='highscoreMovesText3'>&nbsp;</li>
+                                <li class="list-group-item" id='highscoreTimeText3'>&nbsp;</li>
+                              </ul>
+                            </div>
+                              
+                            <div class="panel-heading difficulty4" data-toggle="collapse" data-target="#collapse4" data-parent="#accordion">
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  Insane
+                            </div>
+                            <div id="collapse4" class="panel-collapse collapse" role="tabpanel">
+                              <ul class="list-group">
+                                <li class="list-group-item" id='highscoreMovesText4'>&nbsp;</li>
+                                <li class="list-group-item" id='highscoreTimeText4'>&nbsp;</li>
+                              </ul>
+                            </div>
+                              
+                          </div>
+                        </div>             
                     </div>
                     <div class="modal-footer">
                         <button id="closeHighscoreButton" type="button" class="btn btn-lg btn-primary btn-block">Back</button>

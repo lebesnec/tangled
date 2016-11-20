@@ -47,7 +47,7 @@ var Tangled = {
         this.width = window.innerWidth;
         this.height = window.innerHeight - 57 - FOOTER_HEIGHT; // 57 = toolbar
         if (ITCHIO) {
-            this.width = 1024;
+            this.width = 960;
             this.height = 768;
         }
         

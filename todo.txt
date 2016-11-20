@@ -7,3 +7,4 @@ replace webapp in android
 remove google analytics from android
 upgrade version in gradle
 deploy to play store and amazon https://console.aws.amazon.com/s3/home?region=eu-west-1
+itch.io : set ITCHIO to true 

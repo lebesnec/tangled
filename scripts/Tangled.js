@@ -1,6 +1,7 @@
 var NB_TILES = 120,
     FOOTER_HEIGHT = 30,
     ANDROID = (typeof Android != 'undefined'),
+    ITCHIO = true,
     // Styles nodes :
     NODE_FILL_COLOR = '#e8e8e8',
     NODE_FILL_COLOR_DRAGGED = '#9a9a9a',
@@ -45,6 +46,10 @@ var Tangled = {
         
         this.width = window.innerWidth;
         this.height = window.innerHeight - 57 - FOOTER_HEIGHT; // 57 = toolbar
+        if (ITCHIO) {
+            this.width = 1024;
+            this.height = 768;
+        }
         
         $('#startGameButton').on('click', function () {
             Tangled.playClick();
@@ -135,7 +140,7 @@ var Tangled = {
         var dataNodes = Nodes.getDataNodes(dataTiles),
             dataLinks = Links.getDataLinks(dataTiles, dataNodes);
 
-        this.a = !(document.domain == '127.0.0.1' || document.domain == 'tangled.eu' || document.domain == 'www.tangled.eu' || ANDROID);
+        this.a = !(document.domain == '127.0.0.1' || document.domain == 'tangled.eu' || document.domain == 'www.tangled.eu' || ANDROID || ITCHIO);
         
         this.data = {
             tiles : dataTiles,

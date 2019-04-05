@@ -1,7 +1,7 @@
 var NB_TILES = 120,
     FOOTER_HEIGHT = 30,
     ANDROID = (typeof Android != 'undefined'),
-    ITCHIO = true,
+    ITCHIO = false,
     // Styles nodes :
     NODE_FILL_COLOR = '#e8e8e8',
     NODE_FILL_COLOR_DRAGGED = '#9a9a9a',
@@ -140,7 +140,7 @@ var Tangled = {
         var dataNodes = Nodes.getDataNodes(dataTiles),
             dataLinks = Links.getDataLinks(dataTiles, dataNodes);
 
-        this.a = !(document.domain == '127.0.0.1' || document.domain == 'tangled.eu' || document.domain == 'www.tangled.eu' || ANDROID || ITCHIO);
+        this.a = false; // !(document.domain == '127.0.0.1' || document.domain == 'tangled.eu' || document.domain == 'www.tangled.eu' || ANDROID || ITCHIO);
         
         this.data = {
             tiles : dataTiles,

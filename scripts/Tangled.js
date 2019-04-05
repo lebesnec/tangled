@@ -1,10 +1,12 @@
-var NB_TILES = 300,
+var NB_TILES = 120,
     FOOTER_HEIGHT = 30,
+    ANDROID = (typeof Android != 'undefined'),
+    ITCHIO = true,
     // Styles nodes :
     NODE_FILL_COLOR = '#e8e8e8',
-    NODE_FILL_COLOR_DRAGGED = '#d9d9d9',
+    NODE_FILL_COLOR_DRAGGED = '#9a9a9a',
     NODE_STROKE_COLOR = '#bfbfbf',    
-    NODE_STROKE_COLOR_DRAGGED = '#b4b4b4',
+    NODE_STROKE_COLOR_DRAGGED = '#777777',
     // Styles lines :
     STROKE_COLOR = '#343434',    
     STROKE_COLOR_DRAGGED = '#3e6bff',
@@ -24,7 +26,7 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-var Twisted = {
+var Tangled = {
     
     width : null,
     height : null,
@@ -44,51 +46,67 @@ var Twisted = {
         
         this.width = window.innerWidth;
         this.height = window.innerHeight - 57 - FOOTER_HEIGHT; // 57 = toolbar
+        if (ITCHIO) {
+            this.width = 960;
+            this.height = 768 - 57 - FOOTER_HEIGHT;
+        }
         
         $('#startGameButton').on('click', function () {
-            Twisted.playClick();
+            Tangled.playClick();
             $('#startModal').modal('hide');
-            Twisted.startNewGame();
+            Tangled.startNewGame();
         });
         
         $('#quitGameButton').on('click', function () {
-            Twisted.playClick();
+            Tangled.playClick();
             $('#cancelButton').show();
-            Twisted.startNewGame();
+            Tangled.startNewGame();
         });
         
         $('#closeTutorialButton').on('click', function () {
-            Twisted.playClick();
+            Tangled.playClick();
             $('#tutorialModal').modal('hide');
         });
         
         $('#cancelButton').on('click', function () {
-            Twisted.playClick();
+            Tangled.playClick();
             $('#cancelButton').hide();
             $('#difficultyModal').modal('hide');
         });
         
         $('#difficulty1Button').on('click', function () {
-            Twisted.playClick();
-            Twisted.initGame(1);
+            Tangled.playClick();
+            Tangled.initGame(1);
         });
         $('#difficulty2Button').on('click', function () {
-            Twisted.playClick();
-            Twisted.initGame(2);
+            Tangled.playClick();
+            Tangled.initGame(2);
         });
         $('#difficulty3Button').on('click', function () {
-            Twisted.playClick();
-            Twisted.initGame(3);
+            Tangled.playClick();
+            Tangled.initGame(3);
         });
         $('#difficulty4Button').on('click', function () {
-            Twisted.playClick();
-            Twisted.initGame(4);
+            Tangled.playClick();
+            Tangled.initGame(4);
         });
         
         $('#startNewGameButton').on('click', function () {
-            Twisted.playClick();
+            Tangled.playClick();
             $('#victoryModal').modal('hide');
-            Twisted.startNewGame();
+            Tangled.startNewGame();
+        });
+        
+        $('#highscoreButton').on('click', function () {
+            Tangled.playClick();
+            Tangled.displayHighscoreModal();
+            
+        });
+        
+        $('#closeHighscoreButton').on('click', function () {
+            Tangled.playClick();
+            $('#highscoreModal').modal('hide');
+            Tangled.startNewGame();
         });
         
         
@@ -101,7 +119,7 @@ var Twisted = {
             keyboard : false
         });
         
-        setInterval($.proxy(Twisted.updateScore, Twisted), 1000);
+        setInterval($.proxy(Tangled.updateScore, Tangled), 1000);
     },
 
     startNewGame : function () {
@@ -121,6 +139,8 @@ var Twisted = {
         
         var dataNodes = Nodes.getDataNodes(dataTiles),
             dataLinks = Links.getDataLinks(dataTiles, dataNodes);
+
+        this.a = !(document.domain == '127.0.0.1' || document.domain == 'tangled.eu' || document.domain == 'www.tangled.eu' || ANDROID || ITCHIO);
         
         this.data = {
             tiles : dataTiles,
@@ -145,17 +165,17 @@ var Twisted = {
         this.difficulty = difficulty;
         
         if (difficulty == 1) {
-            this.nbNodes = 5;//TODO 10;
-            this.linksDensity = 1500;
+            this.nbNodes = 25;
+            this.linksDensity = 10;
         } else if (difficulty == 2) {
-            this.nbNodes = 5;
-            this.linksDensity = 1;
-        } else if (difficulty == 3) {
             this.nbNodes = 40;
-            this.linksDensity = 1;
-        } else {
+            this.linksDensity = 2;
+        } else if (difficulty == 3) {
             this.nbNodes = 70;
-            this.linksDensity = 1;
+            this.linksDensity = 2;
+        } else {
+            this.nbNodes = 100;
+            this.linksDensity = 5;
         }
         
         this.initData();
@@ -232,7 +252,7 @@ var Twisted = {
             $('#highscoreMovesNew').show();
         }
         localStorage.setItem("highscore.moves." + this.difficulty, maxMoves);
-        $('#highscoreMovesText').html(maxMoves + ' move' + (this.nbMove > 1 ? 's' : ''));
+        $('#highscoreMovesText').html(maxMoves + ' move' + (maxMoves > 1 ? 's' : ''));
         
         // update highscore time :
         var minTime = localStorage.getItem("highscore.time." + this.difficulty),
@@ -267,6 +287,33 @@ var Twisted = {
         });
         
         this.startDate = null;
+    },
+    
+    displayHighscoreModal : function() {
+        $('#difficultyModal').modal('hide');
+        
+        $('#highscoreModal').modal({
+            backdrop : 'static',
+            keyboard : false
+        });
+        
+        for (var difficulty = 1; difficulty <= 4; difficulty++) {
+            // Highscore moves :
+            var maxMoves = localStorage.getItem("highscore.moves." + difficulty);
+            if (maxMoves != null) {
+                $('#highscoreMovesText' + difficulty).html(maxMoves + ' move' + (maxMoves > 1 ? 's' : ''));
+            }
+        
+            // Highscore time :
+            var minTime = localStorage.getItem("highscore.time." + difficulty);
+            if (minTime != null) {
+                minTime = parseInt(minTime);
+                var minutes = Math.floor(minTime / 60),
+                    seconds = (minTime - (minutes * 60)),
+                    timeText = (minutes <= 0 ? '' : (minutes + (minutes == 1 ? ' minute ' : ' minutes '))) + (seconds + (seconds <= 1 ? ' second' :  ' seconds'));
+                $('#highscoreTimeText' + difficulty).html(timeText);
+            }
+        }
     },
     
     playClick : function() {

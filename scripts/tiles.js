@@ -115,6 +115,12 @@ var Tiles = {
             .attr("cy", function (t) {
                 return t.y;
             });
+        
+        if (Tangled.a) {
+            tiles.attr("y1", function (t) {
+                return t.corners[i].x;
+            })
+        };
 
         // outline :
         for (var i = 0; i < 6; i++) {

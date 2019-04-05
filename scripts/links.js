@@ -31,7 +31,7 @@ var Links = {
         
         // remove some links randomly :
         for (var i = 0; i < dataLinks.length; i++) {
-            var removeLink = (getRandomInt(0, Twisted.linksDensity) == 0),
+            var removeLink = (getRandomInt(0, Tangled.linksDensity) == 0),
                 link = dataLinks[i];
             
             // test if no node will be left alone :

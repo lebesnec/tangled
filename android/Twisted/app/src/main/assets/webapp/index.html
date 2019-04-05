@@ -5,26 +5,58 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="manifest" href="manifest.json">
 
-        <title>Twisted</title>
+        <title>Tangled</title>
 
         <link rel="stylesheet" href="libraries/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="styles/main.css">
+        
+        <link rel="shortcut icon" href="/favicon.ico"/>
+        <link href="images/icons/icon_192.png" rel="apple-touch-icon">
+        <link href="images/icons/icon_192.png" rel="icon" sizes="192x192">
+        
+        <meta property="og:url" content="http://tangled.eu" />
+        <meta property="og:title" content="Tangled" />
+        <meta property="og:image" content="http://tangled.eu/images/icons/icon_512.png" />
     </head>
 
     <body id="d3">
+        <!-- facebook -->
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1139190409445050";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+        
         <script src="libraries/jquery/jquery-2.1.4.min.js"></script>
         <script src="libraries/bootstrap/js/bootstrap.min.js"></script>
         <script src="libraries/d3/d3.min.js"></script>
 
-        <script src="scripts/Tiles.js"></script>
+        <!--<script src="scripts/Tiles.js"></script>
         <script src="scripts/Nodes.js"></script>
         <script src="scripts/Links.js"></script>
-        <script src="scripts/Twisted.js"></script>
+        <script src="scripts/Tangled.js"></script>-->
+        <script src="scripts/final.js?version=3"></script>
 
         <script type="text/javascript">
+            document.body.addEventListener('touchmove', function(event) {
+                event.preventDefault();
+            }, false); 
+
             $(function() {
-                Twisted.start();
+                if (typeof Android == 'undefined') {
+                    $('#footerWeb').show();
+                } else {
+                    $('#footerAndroid').show();
+                }
+                
+                Tangled.start();
             });
         </script>
         
@@ -34,7 +66,7 @@
                 <button id="quitGameButton" type="button" class="btn btn-danger navbar-btn navbar-left" data-toggle="tooltip" data-placement="bottom" title="Start a new game">
                     <span class="glyphicon glyphicon-refresh"></span>
                 </button>
-                <span id="title" class="navbar-brand hidden-xs">&nbsp;Twisted</span>                  
+                <span id="title" class="navbar-brand hidden-xs">&nbsp;Tangled</span>                  
                 <span id="score" class="navbar-right">                 
                     <span id="scoreMove" class="label label-info navbar-text">0 move</span>                   
                     <span id="scoreTime" class="label label-info navbar-text">0 second</span>                   
@@ -47,26 +79,32 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title">Twisted</h1>
+                        <h1 class="modal-title">Tangled</h1>
                     </div>
                     <div class="modal-body support-text">
-                        <p>This game is free but the developer accepts your support by letting you send what you think is fair (beer, gadget, snack, gold bar  ...) to this address :</p>
+                        <p>This game is free but if you want to help the developer you can send whatever you like (beer, gadget, gold bar ...) here :</p>
                         <mark class="center-block">
-                            Christophe Le Besnerais<br>
-                            10C rue Ampère<br>
-                            38000 Grenoble<br>
-                            FRANCE<br>                       
+                            Christophe Le Besnerais<br/>
+                            10C rue Ampère<br/>
+                            38000 Grenoble<br/>
+                            FRANCE<br/>                       
                         </mark>
                     </div>
                     <div class="modal-footer">
-                        <button id="startGameButton" type="button" class="btn btn-lg btn-primary btn-block">Play</button>
-                        <br/>
-                        <div class="btn-group btn-group-lg btn-group-justified" role="group">
-                            <a class="btn btn-info twitter" target="_blank" href="https://twitter.com/christophe_lb" role="button">
-                                <img src="images/twitter.png"/>
+                        <button id="startGameButton" type="button" class="btn btn-lg btn-primary btn-block">Play</button>                    
+                       
+                        <div id="footerWeb" style="display: none">
+                            <a href="https://play.google.com/store/apps/details?id=eu.tangled&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-AC-global-none-all-co-pr-py-PartBadges-Oct1515-1">
+                                <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge-border.png" width="170px"/>
                             </a>
-                            <a class="btn btn-info mail" target="_blank" href="mailto:christophe.androidmarket@gmail.com?Subject=Hello" role="button">
-                                <img src="images/mail.png"/>
+                            <div style="margin-top: 7px;" class="fb-like" data-href="http://tangled.eu" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+                        </div>
+                        
+                        <div id="footerAndroid" style="display: none">
+                            <a class="btn btn-success center-block" role="button" href="http://tangled.eu">Play on www.tangled.eu</a>
+                            <p style="margin-bottom: 3px; margin-top: 7px;">If you enjoy this game please take a moment to rate it on the Play Store :</p>
+                            <a href="https://play.google.com/store/apps/details?id=eu.tangled&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-AC-global-none-all-co-pr-py-PartBadges-Oct1515-1">
+                                <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge-border.png" width="170px"/>
                             </a>
                         </div>
                     </div>
@@ -108,6 +146,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button id="highscoreButton" type="button" class="btn btn-lg btn-info btn-block">Highscore</button>
                         <button id="cancelButton" type="button" class="btn btn-lg btn-block">Cancel</button>
                     </div>
                 </div>
@@ -123,7 +162,78 @@
                         <p><img src="images/tutorial.gif"></img></p>
                     </div>
                     <div class="modal-footer">
-                        <button id="closeTutorialButton" type="button" class="btn btn-lg btn-primary btn-block">Got it !</button>
+                        <button id="closeTutorialButton" type="button" class="btn btn-lg btn-primary btn-block">Play now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Highscore modal -->
+        <div id="highscoreModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title">Highscore</h1>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel-group" id="accordion">
+                          <div class="panel panel-default">
+                              
+                            <div class="panel-heading difficulty1" data-toggle="collapse" data-target="#collapse1" data-parent="#accordion">
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  Easy
+                            </div>
+                            <div id="collapse1" class="panel-collapse collapse in" role="tabpanel">
+                              <ul class="list-group">
+                                <li class="list-group-item" id='highscoreMovesText1'>&nbsp;</li>
+                                <li class="list-group-item" id='highscoreTimeText1'>&nbsp;</li>
+                              </ul>
+                            </div>
+                              
+                            <div class="panel-heading difficulty2" data-toggle="collapse" data-target="#collapse2" data-parent="#accordion">
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  Difficult                              
+                            </div>
+                            <div id="collapse2" class="panel-collapse collapse" role="tabpanel">
+                              <ul class="list-group">
+                                <li class="list-group-item" id='highscoreMovesText2'>&nbsp;</li>
+                                <li class="list-group-item" id='highscoreTimeText2'>&nbsp;</li>
+                              </ul>
+                            </div>
+                              
+                            <div class="panel-heading difficulty3" data-toggle="collapse" data-target="#collapse3" data-parent="#accordion">
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  Hard
+                            </div>
+                            <div id="collapse3" class="panel-collapse collapse" role="tabpanel">
+                              <ul class="list-group">
+                                <li class="list-group-item" id='highscoreMovesText3'>&nbsp;</li>
+                                <li class="list-group-item" id='highscoreTimeText3'>&nbsp;</li>
+                              </ul>
+                            </div>
+                              
+                            <div class="panel-heading difficulty4" data-toggle="collapse" data-target="#collapse4" data-parent="#accordion">
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  <span class="glyphicon glyphicon-star pull-left"></span>
+                                  Insane
+                            </div>
+                            <div id="collapse4" class="panel-collapse collapse" role="tabpanel">
+                              <ul class="list-group">
+                                <li class="list-group-item" id='highscoreMovesText4'>&nbsp;</li>
+                                <li class="list-group-item" id='highscoreTimeText4'>&nbsp;</li>
+                              </ul>
+                            </div>
+                              
+                          </div>
+                        </div>             
+                    </div>
+                    <div class="modal-footer">
+                        <button id="closeHighscoreButton" type="button" class="btn btn-lg btn-primary btn-block">Back</button>
                     </div>
                 </div>
             </div>

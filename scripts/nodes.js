@@ -1,17 +1,19 @@
 var Nodes = {
+    
+    currentDraggedNode : null,
 
     getDataNodes : function (dataTiles) {
         var me = this,
-            nbNodesRow = Math.round(Math.sqrt((Twisted.nbNodes * dataTiles.nbCol) / dataTiles.nbRow)),
-            nbNodesCol = Math.round(Twisted.nbNodes / nbNodesRow),
-            deltaRow = Math.ceil((dataTiles.nbRow - nbNodesCol) / 2),
-            deltaCol = Math.ceil((dataTiles.nbCol - nbNodesRow) / 2),
+            nbNodesRow = Math.round(Math.sqrt((Tangled.nbNodes * dataTiles.nbCol) / dataTiles.nbRow)),
+            nbNodesCol = Math.round(Tangled.nbNodes / nbNodesRow),
+            deltaRow = Math.floor((dataTiles.nbRow - nbNodesCol) / 2),
+            deltaCol = Math.floor((dataTiles.nbCol - nbNodesRow) / 2),
             nb = 0,
             data = [];
         
         for (var i = 0; i < nbNodesCol; i++) {
             for (var j = 0; j < nbNodesRow; j++) {
-                if (nb < Twisted.nbNodes) {
+                if (nb < Tangled.nbNodes) {
                     nb++;
                     var tile = Tiles.getTileAt(dataTiles.data, i + deltaRow, j + deltaCol);
                     var node = {
@@ -35,7 +37,7 @@ var Nodes = {
     },
     
     shuffle : function(dataNodes, dataTiles) {
-        for (var i = 0; i < dataNodes.length; i++) {            
+        for (var i = 0; i < dataNodes.length; i++) {
             var node = dataNodes[i],
                 randomTile = Tiles.getRandomEmptyTile(dataTiles);
             
@@ -112,6 +114,12 @@ var Nodes = {
         return d3.behavior.drag()
         
             .on("dragstart", function (n) {
+                if (Nodes.currentDraggedNode != null) {
+                    return;
+                } else {
+                    Nodes.currentDraggedNode = n;
+                }
+            
                 n.previousTile = n.tile;
             
                 d3.select(this)
@@ -120,7 +128,7 @@ var Nodes = {
                         .style("fill", NODE_FILL_COLOR_DRAGGED)
                         .style("stroke", NODE_STROKE_COLOR_DRAGGED);
 
-                Twisted.render.links.each(function (l) {
+                Tangled.render.links.each(function (l) {
                     if (l.source === n || l.target === n) {
                         var strokeColor = STROKE_COLOR_DRAGGED;
                         if (l.intersect) {
@@ -136,7 +144,11 @@ var Nodes = {
             })
         
             .on("drag", function (n) {
-                var nearestTile = Nodes.getNearestAvailableTile(n, d3.event.x, d3.event.y, Twisted.render.tiles);
+                if (Nodes.currentDraggedNode != n) {
+                    return;
+                }
+            
+                var nearestTile = Nodes.getNearestAvailableTile(n, d3.event.x, d3.event.y, Tangled.render.tiles);
                 
                 Nodes.moveNodeToTile(n, nearestTile);
               
@@ -147,7 +159,7 @@ var Nodes = {
                         .attr("cx", n.x)
                         .attr("cy", n.y);
                 
-                Twisted.render.links.each(function (l) {
+                Tangled.render.links.each(function (l) {
                     if (l.source === n) {
                         l.drag = true;
                         d3.select(this)
@@ -167,13 +179,17 @@ var Nodes = {
                     }
                 });
             
-                Links.checkIntersections(Twisted.render.links);
+                Links.checkIntersections(Tangled.render.links);
             })
         
             .on("dragend", function (n) {
-                var victory = Links.checkIntersections(Twisted.render.links);
+                if (Nodes.currentDraggedNode != n) {
+                    return;
+                }
+            
+               var victory = Links.checkIntersections(Tangled.render.links);
 
-               Twisted.playClick();
+               Tangled.playClick();
             
                 d3.select(this)
                     .transition('dragstartend')
@@ -181,7 +197,7 @@ var Nodes = {
                         .style("fill", NODE_FILL_COLOR)
                         .style("stroke", NODE_STROKE_COLOR);
                 
-                Twisted.render.links.each(function (l) {
+                Tangled.render.links.each(function (l) {
                     l.drag = false;
                     if (l.source === n || l.target === n) {
                         var strokeColor = (l.intersect ? STROKE_COLOR_INTERSECT : STROKE_COLOR);
@@ -194,14 +210,16 @@ var Nodes = {
                 });
             
                 if (n.previousTile != n.tile) {
-                    Twisted.nbMove ++;
-                    Twisted.updateScore();
+                    Tangled.nbMove ++;
+                    Tangled.updateScore();
                 }
                 n.previousTile = null;
             
                 if (victory) {
-                    Twisted.displayVictoryModal();
+                    Tangled.displayVictoryModal();
                 }
+            
+                Nodes.currentDraggedNode = null;
             });
     },
     

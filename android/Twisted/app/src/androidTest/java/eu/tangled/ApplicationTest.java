@@ -1,4 +1,4 @@
-package com.twisted.christophelb.twisted;
+package eu.tangled;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
